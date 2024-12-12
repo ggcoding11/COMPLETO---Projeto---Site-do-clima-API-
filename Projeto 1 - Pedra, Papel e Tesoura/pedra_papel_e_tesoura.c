@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <locale.h>
-#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdlib.h>
@@ -40,7 +39,7 @@ void realizarDuelo(char j1[30], char j2[30]){
 		if ((strcmp(j1, "Tesoura") == 0 && strcmp(j2, "Pedra") == 0) || 
             (strcmp(j1, "Pedra") == 0 && strcmp(j2, "Papel") == 0) || 
             (strcmp(j1, "Papel") == 0 && strcmp(j2, "Tesoura") == 0)) {
-        	printf("Máquina vence!\n");
+        	printf("MÃ¡quina vence!\n");
         } else {
 			printf("Jogador vence!\n");
 		}
@@ -68,7 +67,7 @@ int main(){
 			printf("2 - Papel\n");
 			printf("3 - Tesoura\n\n");
 			
-			printf("Opção: ");
+			printf("OpÃ§Ã£o: ");
 			scanf("%d", &opcaoPlayer);
 			
 			printf("\n");
@@ -86,7 +85,7 @@ int main(){
 		
 		getchar();
 		
-		printf("Recomeçar? [S/N]: ");
+		printf("RecomeÃ§ar? [S/N]: ");
 		scanf("%c", &reiniciar);	
 	} while (reiniciar == 'S' || reiniciar == 's');
 	
