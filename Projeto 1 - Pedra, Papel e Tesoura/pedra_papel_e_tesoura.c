@@ -1,8 +1,6 @@
 #include <stdio.h>
-#include <locale.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdlib.h>
 #include <time.h>
 
 void limparTela() {
@@ -14,7 +12,6 @@ void limparTela() {
 }
 
 void gerarResposta(int opcao, char resposta[30]){
-	
 	switch(opcao){
 		case 1:
 			strcpy(resposta, "Pedra");
@@ -31,24 +28,23 @@ void gerarResposta(int opcao, char resposta[30]){
 }
 
 void realizarDuelo(char j1[30], char j2[30]){
-	printf("%s X %s\n\n", j1, j2);
+	printf(" %s      X      %s\n", j1, j2);
+	printf("(Player)          (Maquina)\n\n");
 	
 	if (!(strcmp(j1, j2))){
-		printf("EMPATE!");
+		printf("          EMPATE!\n");
 	} else {
 		if ((strcmp(j1, "Tesoura") == 0 && strcmp(j2, "Pedra") == 0) || 
             (strcmp(j1, "Pedra") == 0 && strcmp(j2, "Papel") == 0) || 
             (strcmp(j1, "Papel") == 0 && strcmp(j2, "Tesoura") == 0)) {
-        	printf("Máquina vence!\n");
+        	printf("     Maquina vence!\n");
         } else {
-			printf("Jogador vence!\n");
+			printf("     Jogador vence!\n");
 		}
 	}
 }
 
 int main(){
-	setlocale(LC_ALL, "Portuguese");
-	
 	srand(time(NULL));
 	
 	int opcaoPlayer, opcaoCPU;
@@ -67,7 +63,7 @@ int main(){
 			printf("2 - Papel\n");
 			printf("3 - Tesoura\n\n");
 			
-			printf("Opção: ");
+			printf("Opcao: ");
 			scanf("%d", &opcaoPlayer);
 			
 			printf("\n");
@@ -85,7 +81,7 @@ int main(){
 		
 		getchar();
 		
-		printf("Recomeçar? [S/N]: ");
+		printf("Recomecar? [S/N]: ");
 		scanf("%c", &reiniciar);	
 	} while (reiniciar == 'S' || reiniciar == 's');
 	
