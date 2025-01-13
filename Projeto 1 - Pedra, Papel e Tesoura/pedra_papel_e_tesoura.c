@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <conio.h>
 
 void limparTela() {
     #ifdef _WIN32
@@ -59,14 +60,15 @@ int main(){
 		
 			printf("Prepare - se...\n\n");
 			
+			char tecla;
+			
 			printf("1 - Pedra\n");
 			printf("2 - Papel\n");
 			printf("3 - Tesoura\n\n");
 			
-			printf("Opcao: ");
-			scanf("%d", &opcaoPlayer);
+			tecla = _getch();
 			
-			printf("\n");
+			opcaoPlayer = tecla - '0'; //Conversão em inteiro
 		} while ((opcaoPlayer < 1) || (opcaoPlayer > 3));
 		
 		gerarResposta(opcaoPlayer, jogadaPlayer);
@@ -78,11 +80,10 @@ int main(){
 		realizarDuelo(jogadaPlayer, jogadaCPU);
 		
 		printf("\n");
-		
-		getchar();
-		
+				
 		printf("Recomecar? [S/N]: ");
-		scanf("%c", &reiniciar);	
+		
+		reiniciar = _getch();
 	} while (reiniciar == 'S' || reiniciar == 's');
 	
 	return 0;
