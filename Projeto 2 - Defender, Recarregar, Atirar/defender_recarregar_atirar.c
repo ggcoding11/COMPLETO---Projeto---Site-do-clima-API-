@@ -42,15 +42,25 @@ int main(){
 		gerarResultado();
 	}
 	
+	limpaTela();
+	
+	printf("Resultado final: ");
+	
+	if (pontosPlayer > pontosCPU){
+		printf("Jogador venceu o jogo!");
+	} else {
+		if (pontosPlayer < pontosCPU){
+			printf("CPU venceu o jogo!");
+		} else {
+			printf("Empate no jogo!");
+		}
+	}
+	
 	return 0;
 }
 
 void limpaTela() {
-    #ifdef _WIN32
-        system("cls"); // Limpa a tela no Windows
-    #else
-        system("clear"); // Limpa a tela no Linux/Unix
-    #endif
+    system("cls"); // Limpa a tela no Windows
 }
 
 void gerarResultado(){
@@ -67,16 +77,16 @@ void gerarResultado(){
 	if (resultadoDuelo){
 		switch(resultadoDuelo){
 			case 1:
-				printf("EMPATE - OS DOIS MORRERAM!");
+				printf("RODADA EMPATADA!");
 			break;
 			
 			case 2:
-				printf("JOGADOR VENCEU!!");
+				printf("JOGADOR VENCEU A RODADA!!");
 				pontosPlayer++;
 			break;
 			
 			case 3:
-				printf("JOGADOR PERDEU");
+				printf("JOGADOR PERDEU A RODADA");
 				pontosCPU++;
 			break;
 		}
@@ -86,14 +96,13 @@ void gerarResultado(){
 		
 		printf("\n\n");
 		
-		printf("PLACAR - ( %d  X  %d )", pontosPlayer, pontosCPU);
+		printf("PLACAR - ( %d  X  %d )\n\n", pontosPlayer, pontosCPU);
 		
 		contDuelo++;
-		
-		sleep(2);
-	} else {
-		sleep(1);
 	}
+	
+	printf("Pressione qualquer tecla para continuar...");
+	getch();
 }
 
 int escolhaJogador(){
@@ -180,15 +189,15 @@ int escolhaMaquina(){
 
 int duelo(int pEscolha, int mEscolha){
 	if (pEscolha == 3 && mEscolha == 3){
-		return 1;
+		return 1; //Empate
 	}
 	
-	if (pEscolha == 3 && mEscolha == 1){
-		return 2;
+	if (pEscolha == 3 && mEscolha != 2){
+		return 2; //Jogador vence
 	}
 		
-	if (mEscolha == 3 && (pEscolha != 3 && pEscolha != 2)){
-		return 3;
+	if (mEscolha == 3 && pEscolha != 2){
+		return 3; //Máquina vence
 	}
 	
 	return 0; //Precisa estar aqui para que não hajam valores imprevisíveis no duelo()
