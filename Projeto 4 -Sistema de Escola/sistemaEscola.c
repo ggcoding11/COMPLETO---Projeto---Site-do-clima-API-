@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <locale.h>
 #include <unistd.h>
 
@@ -110,11 +111,17 @@ void listarAlunos(){
 	FILE *listaAlunos = fopen(nomeArquivo, "r");
 	
 	if (!listaAlunos){
-		printf("Erro ao abrir o arquivo!\n");
+		printf("Turma não encontrada!\n");
+		
+		fflush(stdin);
+	
+		printf("Pressione qualquer tecla para continuar!");
+		getchar();
+			
 		return;
 	}
 	
-	printf("Alunos: \n");
+	printf("Alunos: \n\n");
 	
 	Aluno aluno;
 	
@@ -148,6 +155,8 @@ void pesquisarAlunos(){
 	
 	switch(opcao){
 		case 1: {
+			fflush(stdin);
+			
 			int idEscolhido;
 			
 			printf("Qual o ID do aluno?: ");
@@ -204,9 +213,66 @@ void pesquisarAlunos(){
 		
 		break;
 		
-		case 2:
+		case 2: {
+			fflush(stdin);
 			
+			char nomeParcial[MAX_NOMEALUNO];
+			
+			printf("Escreva o nome do estudante: ");
+			fgets(nomeParcial, sizeof(nomeParcial), stdin);
+			
+			printf("\n");
+			
+			strtok(nomeParcial, "\n");
+			
+			int idTurma = 1;
+				
+			char nomeArquivo[30];
+			
+			sprintf(nomeArquivo, "%d Alunos.txt", idTurma);
+			
+			FILE *listaAlunos = fopen(nomeArquivo, "r");
+			
+			Aluno aluno;
+			
+			int encontrou = 0;
+			
+			while (listaAlunos){	
+				while (fscanf(listaAlunos, "%d|%99[^|]|%*[^|]|%d|%10s", &aluno.id, aluno.nome, &aluno.idade, aluno.dataNasc) == 4){
+					strtok(aluno.nome, "\n");
+					
+					char *ptr = strstr(aluno.nome, nomeParcial);
+					
+					if (ptr){
+						encontrou = 1;
+						
+						printf("ID: %d\n", aluno.id);
+						printf("Nome: %s\n", aluno.nome);
+						printf("Idade: %d\n", aluno.idade);
+						printf("Data de nascimento: %s\n", aluno.dataNasc);
+				
+						printf("\n\n");		
+					}
+				}
+				
+				idTurma++;
+				sprintf(nomeArquivo, "%d Alunos.txt", idTurma);
+				
+				listaAlunos = fopen(nomeArquivo, "r");
+			} 
+			
+			if (!encontrou){
+				printf("Aluno não encontrado!\n");		
+			} 
+		}
+		
+		fflush(stdin);
+	
+		printf("Pressione qualquer tecla para continuar!");
+		getchar();
+		
 		break;
+				
 	}
-
 }
+
