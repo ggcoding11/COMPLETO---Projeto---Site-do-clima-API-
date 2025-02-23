@@ -1,0 +1,10 @@
+1|Gustavo de Almeida Gomes|1|19|08/11/2005  
+2|Mariana Ferreira Lima|1|21|15/04/2003  
+3|Lucas Andrade Souza|1|20|22/09/2004  
+4|Bruna Oliveira Santos|1|18|30/12/2006  
+5|Ricardo Mendes Carvalho|1|22|05/07/2002  
+6|Camila Rocha Martins|1|19|10/02/2005  
+7|Felipe Nascimento Silva|1|23|25/06/2001  
+8|Juliana Alves Pereira|1|20|13/08/2004  
+9|Thiago Costa Ribeiro|1|21|07/03/2003  
+10|Amanda Barbosa Figueiredo|1|18|19/11/2006
