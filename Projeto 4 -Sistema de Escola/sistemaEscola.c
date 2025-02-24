@@ -6,7 +6,6 @@
 #define MAX_NOMETURMA 50
 #define MAX_NOMEALUNO 100
 
-
 typedef struct {
 	int id;
 	char nome[MAX_NOMETURMA];
@@ -17,11 +16,13 @@ typedef struct{
 	char nome[MAX_NOMEALUNO];
 	int idade;
 	char dataNasc[11];
+	int turma;
 } Aluno;
 
 
 void listarAlunos();
 void pesquisarAlunos();
+void cadastrarAlunos();
 
 int main(){
 	setlocale(LC_ALL, "Portuguese");
@@ -104,11 +105,7 @@ void listarAlunos(){
 	printf("\nQual a turma?: ");
 	scanf("%d", &idEscolhido);
 	
-	char nomeArquivo[30];
-	
-	sprintf(nomeArquivo, "%d Alunos.txt", idEscolhido);
-	
-	FILE *listaAlunos = fopen(nomeArquivo, "r");
+	FILE *listaAlunos = fopen("Alunos.txt", "r");
 	
 	if (!listaAlunos){
 		printf("Turma não encontrada!\n");
@@ -125,13 +122,15 @@ void listarAlunos(){
 	
 	Aluno aluno;
 	
-	while (fscanf(listaAlunos, "%d|%99[^|]|%*[^|]|%d|%10s", &aluno.id, aluno.nome, &aluno.idade, aluno.dataNasc) == 4){
-		printf("ID: %d\n", aluno.id);
-		printf("Nome: %s\n", aluno.nome);
-		printf("Idade: %d\n", aluno.idade);
-		printf("Data de nascimento: %s\n", aluno.dataNasc);
-		
-		printf("\n");
+	while (fscanf(listaAlunos, "%d|%99[^|]|%d|%d|%10s", &aluno.id, aluno.nome, &aluno.turma, &aluno.idade, aluno.dataNasc) == 5){
+		if (aluno.turma == idEscolhido){
+			printf("ID: %d\n", aluno.id);
+			printf("Nome: %s\n", aluno.nome);
+			printf("Idade: %d\n", aluno.idade);
+			printf("Data de nascimento: %s\n", aluno.dataNasc);
+			
+			printf("\n");	
+		}
 	}
 	
 	fflush(stdin);
@@ -164,35 +163,20 @@ void pesquisarAlunos(){
 			
 			printf("\n");
 			
-			int idTurma = 1;
-				
 			char nomeArquivo[30];
 			
-			sprintf(nomeArquivo, "%d Alunos.txt", idTurma);
-			
-			FILE *listaAlunos = fopen(nomeArquivo, "r");
+			FILE *listaAlunos = fopen("Alunos.txt", "r");
 			
 			Aluno aluno;
 			
 			int encontrou = 0;
-			
-			while (listaAlunos){	
-				while (fscanf(listaAlunos, "%d|%99[^|]|%*[^|]|%d|%10s", &aluno.id, aluno.nome, &aluno.idade, aluno.dataNasc) == 4){
-					if (idEscolhido == aluno.id){
-						encontrou = 1;
-						break;
-					}	
-				}
 				
-				if (encontrou){
+			while (fscanf(listaAlunos, "%d|%99[^|]|%*[^|]|%d|%10s", &aluno.id, aluno.nome, &aluno.idade, aluno.dataNasc) == 4){
+				if (idEscolhido == aluno.id){
+					encontrou = 1;
 					break;
-				}
-				
-				idTurma++;
-				sprintf(nomeArquivo, "%d Alunos.txt", idTurma);
-				
-				listaAlunos = fopen(nomeArquivo, "r");
-			} 
+				}	
+			}
 			
 			if (encontrou){
 				printf("ID: %d\n", aluno.id);
@@ -225,44 +209,31 @@ void pesquisarAlunos(){
 			
 			strtok(nomeParcial, "\n");
 			
-			int idTurma = 1;
-				
-			char nomeArquivo[30];
-			
-			sprintf(nomeArquivo, "%d Alunos.txt", idTurma);
-			
-			FILE *listaAlunos = fopen(nomeArquivo, "r");
+			FILE *listaAlunos = fopen("Alunos.txt", "r");
 			
 			Aluno aluno;
 			
 			int encontrou = 0;
 			
-			while (listaAlunos){	
-				while (fscanf(listaAlunos, "%d|%99[^|]|%*[^|]|%d|%10s", &aluno.id, aluno.nome, &aluno.idade, aluno.dataNasc) == 4){
-					strtok(aluno.nome, "\n");
-					
-					char *ptr = strstr(aluno.nome, nomeParcial);
-					
-					if (ptr){
-						encontrou = 1;
-						
-						printf("ID: %d\n", aluno.id);
-						printf("Nome: %s\n", aluno.nome);
-						printf("Idade: %d\n", aluno.idade);
-						printf("Data de nascimento: %s\n", aluno.dataNasc);
+			while (fscanf(listaAlunos, "%d|%99[^|]|%*[^|]|%d|%10s", &aluno.id, aluno.nome, &aluno.idade, aluno.dataNasc) == 4){
+				strtok(aluno.nome, "\n");
 				
-						printf("\n\n");		
-					}
+				char *ptr = strstr(aluno.nome, nomeParcial);
+				
+				if (ptr){
+					encontrou = 1;
+					
+					printf("ID: %d\n", aluno.id);
+					printf("Nome: %s\n", aluno.nome);
+					printf("Idade: %d\n", aluno.idade);
+					printf("Data de nascimento: %s\n", aluno.dataNasc);
+			
+					printf("\n");		
 				}
-				
-				idTurma++;
-				sprintf(nomeArquivo, "%d Alunos.txt", idTurma);
-				
-				listaAlunos = fopen(nomeArquivo, "r");
-			} 
+			}	
 			
 			if (!encontrou){
-				printf("Aluno não encontrado!\n");		
+				printf("Aluno não encontrado!\n\n");		
 			} 
 		}
 		
@@ -272,7 +243,14 @@ void pesquisarAlunos(){
 		getchar();
 		
 		break;
-				
 	}
 }
 
+void cadastrarAlunos(){
+	system("cls");
+	
+	printf("CADASTRO DE ALUNOS\n\n");
+	
+	//Continuar...
+	
+}
