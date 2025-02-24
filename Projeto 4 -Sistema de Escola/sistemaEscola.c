@@ -133,6 +133,8 @@ void listarAlunos(){
 		}
 	}
 	
+	fclose(listaAlunos);
+	
 	fflush(stdin);
 	
 	printf("Pressione qualquer tecla para continuar!");
@@ -188,8 +190,10 @@ void pesquisarAlunos(){
 			} else {
 				printf("Aluno não encontrado!\n\n");		
 			}
+			
+			fclose(listaAlunos);
 		}
-		
+	
 		fflush(stdin);
 	
 		printf("Pressione qualquer tecla para continuar!");
@@ -235,6 +239,8 @@ void pesquisarAlunos(){
 			if (!encontrou){
 				printf("Aluno não encontrado!\n\n");		
 			} 
+			
+			fclose(listaAlunos);
 		}
 		
 		fflush(stdin);
@@ -251,6 +257,5 @@ void cadastrarAlunos(){
 	
 	printf("CADASTRO DE ALUNOS\n\n");
 	
-	//Continuar...
-	
+	Aluno aluno;
 }
