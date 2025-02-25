@@ -64,6 +64,10 @@ int main(){
 				pesquisarAlunos();
 			break;
 			
+			case 5:
+				cadastrarAlunos();
+			break;
+			
 			case 0:
 				printf("\nObrigado por utilizar o meu sistema!");
 			break;
@@ -88,7 +92,12 @@ void listarAlunos(){
 	FILE *listaTurmas = fopen("listaTurmas.txt", "r");
 	
 	if (!listaTurmas){
-		printf("Erro ao abrir o arquivo!\n");
+		printf("Sem turmas disponíveis!\n");
+		
+		fflush(stdin);
+	
+		printf("Pressione qualquer tecla para continuar!");
+		getchar();
 		return;
 	}
 	
@@ -108,7 +117,7 @@ void listarAlunos(){
 	FILE *listaAlunos = fopen("Alunos.txt", "r");
 	
 	if (!listaAlunos){
-		printf("Turma não encontrada!\n");
+		printf("Arquivo não encontrado!\n\n");
 		
 		fflush(stdin);
 	
@@ -146,6 +155,19 @@ void pesquisarAlunos(){
 	
 	printf("PESQUISA DE ALUNOS\n\n");
 	
+	FILE *listaAlunos = fopen("Alunos.txt", "r");
+	
+	if(!listaAlunos){
+		printf("Arquivo não encontrado!\n\n");
+		
+		fflush(stdin);
+	
+		printf("Pressione qualquer tecla para continuar!");
+		getchar();
+		
+		return;
+	}
+	
 	printf("1 - Por ID\n");
 	printf("2 - Por nome\n\n");
 	
@@ -166,8 +188,6 @@ void pesquisarAlunos(){
 			printf("\n");
 			
 			char nomeArquivo[30];
-			
-			FILE *listaAlunos = fopen("Alunos.txt", "r");
 			
 			Aluno aluno;
 			
@@ -190,8 +210,6 @@ void pesquisarAlunos(){
 			} else {
 				printf("Aluno não encontrado!\n\n");		
 			}
-			
-			fclose(listaAlunos);
 		}
 	
 		fflush(stdin);
@@ -212,8 +230,6 @@ void pesquisarAlunos(){
 			printf("\n");
 			
 			strtok(nomeParcial, "\n");
-			
-			FILE *listaAlunos = fopen("Alunos.txt", "r");
 			
 			Aluno aluno;
 			
@@ -238,9 +254,7 @@ void pesquisarAlunos(){
 			
 			if (!encontrou){
 				printf("Aluno não encontrado!\n\n");		
-			} 
-			
-			fclose(listaAlunos);
+			}	
 		}
 		
 		fflush(stdin);
@@ -250,6 +264,8 @@ void pesquisarAlunos(){
 		
 		break;
 	}
+	
+	fclose(listaAlunos);
 }
 
 void cadastrarAlunos(){
@@ -257,5 +273,114 @@ void cadastrarAlunos(){
 	
 	printf("CADASTRO DE ALUNOS\n\n");
 	
+	FILE *listaTurmas = fopen("listaTurmas.txt", "r");
+	
+	if (!listaTurmas){
+		printf("Sem turmas disponíveis!\n");
+		
+		fflush(stdin);
+	
+		printf("Pressione qualquer tecla para continuar!");
+		getchar();
+		return;
+	}
+	
 	Aluno aluno;
+	
+	FILE *listaAlunos = fopen("Alunos.txt", "a+");
+	
+	if(!listaAlunos){
+		printf("Arquivo não encontrado!\n\n");
+		
+		fflush(stdin);
+	
+		printf("Pressione qualquer tecla para continuar!");
+		getchar();
+		
+		return;
+	}
+	
+	rewind(listaAlunos);
+	
+	int repetido;
+	
+	do {
+		repetido = 0;
+		
+		printf("Qual o ID do aluno(a)?: ");
+		scanf("%d", &aluno.id);
+		
+		if (aluno.id <= 0){
+			printf("ID inválido!!\n\n");
+		}
+		
+		int idCadastrado;
+		
+		while (fscanf(listaAlunos, "%d|%*[^|]|%*[^|]|%*[^|]|%*[^\n]", &idCadastrado) == 1){
+			if (idCadastrado == aluno.id){
+				printf("ID de estudante já cadastrado!\n\n");
+				repetido = 1;
+				
+				break;
+			}	
+		}	
+		
+		rewind(listaAlunos);
+	} while (repetido || aluno.id <= 0);
+	
+	fflush(stdin);
+	
+	printf("Qual o nome do aluno(a)?: ");
+	fgets(aluno.nome, sizeof(aluno.nome), stdin);
+	
+	strtok(aluno.nome, "\n");
+	
+	printf("Qual a data de nascimento?: ");
+	fgets(aluno.dataNasc, sizeof(aluno.dataNasc), stdin);
+	
+	strtok(aluno.dataNasc, "\n");
+	
+	printf("Qual a idade?: ");
+	scanf("%d", &aluno.idade);
+	
+	printf("Qual a turma?: \n\n");
+	
+	Turma turma;
+	
+	while(fscanf(listaTurmas, "%d %50[^\n]", &turma.id, turma.nome) == 2){
+		printf("%d - %s\n", turma.id, turma.nome);
+	}
+	
+	int turmaValida;
+
+	rewind(listaTurmas);
+	
+	do {
+		turmaValida = 0;
+		
+		printf("Opção: ");
+		scanf("%d", &aluno.turma);	
+		
+		while(fscanf(listaTurmas, "%d %*[^\n]", &turma.id) == 1){
+			if (aluno.turma == turma.id){
+				turmaValida = 1;
+				break;
+			}
+		}
+		
+		rewind(listaTurmas);
+	} while (!turmaValida);
+
+	fclose(listaTurmas);
+	
+	fprintf(listaAlunos, "\n%d|%s|%d|%d|%s", aluno.id, aluno.nome, aluno.turma, aluno.idade, aluno.dataNasc);
+	
+	printf("Aluno cadastrado!!\n\n");
+				
+	fclose(listaAlunos);
+	
+	fflush(stdin);
+	
+	printf("Pressione qualquer tecla para continuar!");
+	getchar();
 }

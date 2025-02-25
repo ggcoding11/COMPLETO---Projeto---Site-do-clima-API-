@@ -1,0 +1,13 @@
+1) Cadastrar aluno:
+
+- Pedir primeiro o ID (verificar se já existe)
+- Ficar em um loop até que o ID não seja um existente
+- Pedir nome, idade, data de nascimento e turma
+- Depois só adicionar no TXT
+
+2) Registrar notas:
+
+- Matérias: História, Matemática, Física, Geografia, Literatura, Química, Biologia, Sociologia
+e Filosofia
+- Pedir primeiro o ID do aluno, depois a matéria, depois adicionar as duas notas
+- Calcular a média e escrever tudo no arquivo
