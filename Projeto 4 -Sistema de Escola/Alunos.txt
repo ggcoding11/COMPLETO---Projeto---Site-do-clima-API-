@@ -1,21 +1,3 @@
-1|Gustavo de Almeida Gomes|1|19|08/11/2005  
-2|Mariana Ferreira Lima|1|21|15/04/2003  
-3|Lucas Andrade Souza|1|20|22/09/2004  
-4|Bruna Oliveira Santos|1|18|30/12/2006  
-5|Ricardo Mendes Carvalho|1|22|05/07/2002  
-6|Camila Rocha Martins|1|19|10/02/2005  
-7|Gustavo Nascimento Silva|1|23|25/06/2001  
-8|Juliana Alves Pereira|1|20|13/08/2004  
-9|Gustavo Costa Ribeiro|1|21|07/03/2003  
-10|Amanda Barbosa Figueiredo|1|18|19/11/2006
-11|Renato Oliveira Cunha|2|19|14/05/2005  
-12|Bianca Souza Fernandes|2|22|09/09/2002  
-13|Fernando Alves Monteiro|2|20|17/07/2004  
-14|Tatiane Ribeiro Castro|2|18|03/12/2006  
-15|Gabriel Martins Costa|2|21|26/01/2003  
-16|Larissa Mendes Rocha|2|19|08/06/2005  
-17|Diego Ferreira Lopes|2|23|30/10/2001  
-18|Carolina Nascimento Duarte|2|20|11/04/2004  
-19|Vinícius Barbosa Lima|2|21|15/02/2003 
-21|JeeJ|2|17|21/02/2002
-22|Mateus|1|16|21/03/2004
+1|Gustavo de Almeida Gomes|1|19|08/11/2005
+2|Pedro Henrique Cardoso|2|17|11/02/2003
+3|Mateus Henrique|1|17|02/10/2004

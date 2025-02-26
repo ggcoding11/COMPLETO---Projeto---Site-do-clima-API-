@@ -5,6 +5,7 @@
 
 #define MAX_NOMETURMA 50
 #define MAX_NOMEALUNO 100
+#define MAX_NOMEMATERIA 50
 
 typedef struct {
 	int id;
@@ -19,10 +20,20 @@ typedef struct{
 	int turma;
 } Aluno;
 
+typedef struct{
+	char nome[MAX_NOMEMATERIA];
+	float nota1;
+	float nota2;
+	
+	float media;
+} Materia;
+
+char materias[9][] = {"História", "Sociologia", "Geografia", "Filosofia", "Literatura", "Matemática", "Física", "Biologia", "Química"};
 
 void listarAlunos();
 void pesquisarAlunos();
 void cadastrarAlunos();
+void lancarNotas();
 
 int main(){
 	setlocale(LC_ALL, "Portuguese");
@@ -62,6 +73,10 @@ int main(){
 			
 			case 3:
 				pesquisarAlunos();
+			break;
+			
+			case 4:
+				lancarNotas();
 			break;
 			
 			case 5:
@@ -106,13 +121,32 @@ void listarAlunos(){
 	while(fscanf(listaTurmas, "%d %50[^\n]", &turma.id, turma.nome) == 2){
 		printf("%d - %s\n", turma.id, turma.nome);
 	}
-
-	fclose(listaTurmas);
+	
+	int turmaValida;
 	
 	int idEscolhido;
 	
-	printf("\nQual a turma?: ");
-	scanf("%d", &idEscolhido);
+	do {
+		rewind(listaTurmas);
+		
+		turmaValida = 0;
+		
+		printf("\nQual a turma?: ");
+		scanf("%d", &idEscolhido);
+		
+		while(fscanf(listaTurmas, "%d %*[^\n]", &turma.id) == 1){
+			if (idEscolhido == turma.id){
+				turmaValida = 1;
+				break;
+			}
+		}
+		
+		if (!turmaValida){
+			printf("Turma não encontrada!\n");
+		}
+	} while (!turmaValida);
+	
+	fclose(listaTurmas);
 	
 	FILE *listaAlunos = fopen("Alunos.txt", "r");
 	
@@ -182,7 +216,7 @@ void pesquisarAlunos(){
 			
 			int idEscolhido;
 			
-			printf("Qual o ID do aluno?: ");
+			printf("Qual o ID do estudante?: ");
 			scanf("%d", &idEscolhido);	
 			
 			printf("\n");
@@ -307,7 +341,7 @@ void cadastrarAlunos(){
 	do {
 		repetido = 0;
 		
-		printf("Qual o ID do aluno(a)?: ");
+		printf("Qual o ID do estudante?: ");
 		scanf("%d", &aluno.id);
 		
 		if (aluno.id <= 0){
@@ -352,10 +386,10 @@ void cadastrarAlunos(){
 	}
 	
 	int turmaValida;
-
-	rewind(listaTurmas);
 	
 	do {
+		rewind(listaTurmas);
+		
 		turmaValida = 0;
 		
 		printf("Opção: ");
@@ -367,13 +401,11 @@ void cadastrarAlunos(){
 				break;
 			}
 		}
-		
-		rewind(listaTurmas);
 	} while (!turmaValida);
 
 	fclose(listaTurmas);
 	
-	fprintf(listaAlunos, "\n%d|%s|%d|%d|%s", aluno.id, aluno.nome, aluno.turma, aluno.idade, aluno.dataNasc);
+	fprintf(listaAlunos, "%d|%s|%d|%d|%s\n", aluno.id, aluno.nome, aluno.turma, aluno.idade, aluno.dataNasc);
 	
 	printf("Aluno cadastrado!!\n\n");
 				
@@ -383,4 +415,39 @@ void cadastrarAlunos(){
 	
 	printf("Pressione qualquer tecla para continuar!");
 	getchar();
+}
+
+void lancarNotas(){
+	system("cls");
+	
+	printf("LANÇAMENTO DE NOTAS\n\n");
+	
+	Aluno aluno;
+	
+	printf("Qual o ID do estudante?: ");
+	scanf("%d", &aluno.id);
+	
+	printf("Matérias: \n");
+	printf("1 - História\n");
+	printf("2 - Sociologia\n");
+	printf("3 - Geografia\n");
+	printf("4 - Filosofia\n");
+	printf("5 - Literatura\n");
+	printf("6 - Matemática\n");
+	printf("7 - Física\n");
+	printf("8 - Biologia\n");
+	printf("9 - Química\n\n");
+	
+	int opcao;
+	
+	do {
+		printf("Qual a matéria?: ");
+		scanf("%d", &opcao);	
+	} while (opcao <= 0 && opcao > 9);
+
+	Materia materia;
+	
+	strcpy(materia.nome, materia[opcao - 1]);
+	
+	strtok(materia.nome, "\n");	
 }
