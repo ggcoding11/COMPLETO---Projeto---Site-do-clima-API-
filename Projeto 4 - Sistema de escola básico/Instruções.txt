@@ -6,38 +6,64 @@ retorna 2 - inválido
 
 1) Cadastro de alunos
 
-Primeiro vai pedir o ID
+-Solicitação do ID
 
-Após a verificação do ID (se é válido e se é repetido), pedir as informações:
+-Verificação do ID (para ver se aluno ainda não foi cadastado)
 
-- Nome, Data de Nascimento
+-Se sim, pedir nome e data de nascimento
 
-- A partir da data de nascimento, a idade será calculada
+-A partir da data de nascimento, a idade será calculada
 
-Depois os dados serão escritos no arquivo
+-Escrita dos dados
 
 2) Remoção de aluno
 
-Primeiro vai pedir o ID do aluno
+-Solicitação do ID
 
-Usar o verificarID
+-Verificação do ID (para ver se aluno já foi cadastrado)
 
-Basicamente, todos os dados de alunos serão lidos e adicionados em um vetor
+-Se sim, basicamente, todos os dados de alunos serão lidos e adicionados em um vetor
 
-Quando chegar no ID removido, ele será ignorado e não será adicionado ao vetor
+-Quando chegar no ID removido, ele será ignorado e não será adicionado ao vetor
 
-No final, basta escrever todo o conteúdo do vetor no arquivo
+- Escrita dos dados do vetor
 
 3) Alteração de aluno
 
-Primeiro vai pedir o ID
+-Solicitação do ID
 
-Usar o verificarID para ver se já foi cadastrado esse aluno ou não
+-Verificação do ID (para ver se aluno já foi cadastrado)
 
-Se o aluno existir mesmo, eu adiciono os dados que vão substituir em variáveis
+-Se o aluno existir mesmo, eu adiciono os dados que vão substituir os antigos em variáveis
 
-Vou guardando todos os dados da lista em um vetor, mas quando chegar no ID que eu mandei, ele vai adicionar os novos dados no lugar
+-Vou guardando todos os dados da lista em um vetor, mas quando chegar no ID que eu mandei, ele vai adicionar os novos dados no lugar
 
-Depois basta escrever tudo no arquivo
+- Escrita dos dados do vetor
 
+4) Cadastro de nota
 
+-Solicitação do ID
+
+-Verificação do ID (para ver se aluno já foi cadastrado)
+
+- Se sim, vai pedir matéria, nota 1 semestre, nota 2 semestre
+
+- A partir disso, a média será calculada
+
+- Escrita dos dados
+
+5) Remoção e alteração de notas
+
+-Vai funcionar da mesma forma que a dos alunos
+
+6) Listagem de boletim
+
+-Solicitação do ID
+
+-Verificação do ID (para ver se aluno já foi cadastrado)
+
+- Se sim, o arquivo de notas será lido, em busca de todos os conjuntos de notas com aquele ID em específico
+
+7) Listagem de alunos
+
+-Sem segredo, apenas vou ler todo o arquivo txt de alunos
