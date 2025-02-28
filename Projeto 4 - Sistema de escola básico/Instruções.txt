@@ -1,0 +1,28 @@
+1) Cadastro de alunos
+
+Primeiro vai pedir o ID
+
+Após a verificação do ID (se é válido e se é repetido), pedir as informações:
+
+- Nome, Data de Nascimento
+
+- A partir da data de nascimento, a idade será calculada
+
+Depois os dados serão escritos no arquivo
+
+2) Remoção de aluno
+
+Primeiro vai pedir o ID do aluno
+
+Basicamente, todos os dados de alunos serão lidos e adicionados em um vetor
+
+Quando chegar no ID removido, ele será ignorado e não será adicionado ao vetor
+
+No final, basta escrever todo o conteúdo do vetor no arquivo
+
+Se o ID do aluno não existir, uma mensagem aparecerá dizendo que nada foi encontrado
+
+3) Alteração de aluno
+
+Primeiro vai pedir o ID
+
