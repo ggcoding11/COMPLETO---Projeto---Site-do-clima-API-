@@ -1,3 +1,9 @@
+função verificarID()
+
+retorna 0 - válido, não foi cadastrado ainda
+retorna 1 - válido, já foi cadastrado
+retorna 2 - inválido
+
 1) Cadastro de alunos
 
 Primeiro vai pedir o ID
@@ -14,15 +20,24 @@ Depois os dados serão escritos no arquivo
 
 Primeiro vai pedir o ID do aluno
 
+Usar o verificarID
+
 Basicamente, todos os dados de alunos serão lidos e adicionados em um vetor
 
 Quando chegar no ID removido, ele será ignorado e não será adicionado ao vetor
 
 No final, basta escrever todo o conteúdo do vetor no arquivo
 
-Se o ID do aluno não existir, uma mensagem aparecerá dizendo que nada foi encontrado
-
 3) Alteração de aluno
 
 Primeiro vai pedir o ID
+
+Usar o verificarID para ver se já foi cadastrado esse aluno ou não
+
+Se o aluno existir mesmo, eu adiciono os dados que vão substituir em variáveis
+
+Vou guardando todos os dados da lista em um vetor, mas quando chegar no ID que eu mandei, ele vai adicionar os novos dados no lugar
+
+Depois basta escrever tudo no arquivo
+
 
