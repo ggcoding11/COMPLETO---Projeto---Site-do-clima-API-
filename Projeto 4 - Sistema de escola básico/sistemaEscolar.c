@@ -1,15 +1,18 @@
 #include <stdio.h>
+#include <string.h>
 #include <time.h>
 
 void menuPrincipal();
 void menuAlunos();
 void menuNotas();
 
-int verificarID(int *id);
-void finalizar();
+int qntdAlunos = 0;
 
 void cadastrarAluno();
 void alterarDadosAluno();
+
+int verificarID(int *id);
+void finalizar();
 
 typedef struct{
 	int id;
@@ -20,6 +23,18 @@ typedef struct{
 
 int main(){
 	
+	FILE *listaAlunos = fopen("Alunos.txt", "r");
+	
+	if (listaAlunos){
+		int id;
+		
+		while (fscanf(listaAlunos, "%d|", &id) == 1){
+			qntdAlunos++;
+		}
+	}
+	
+	fclose(listaAlunos);
+		
 	menuPrincipal();
 	
 	return 0;
@@ -39,7 +54,7 @@ int verificarID(int *id){
 	
 		Aluno aluno;
 		
-		while (fscanf(listaAlunos, "%d|%*[^|]|%*[^\n]", &aluno.id) == 1){
+		while (fscanf(listaAlunos, "%d|", &aluno.id) == 1){
 			if (aluno.id == *id){
 				return 1;		
 			}
@@ -195,7 +210,9 @@ void cadastrarAluno(){
 		
 			fprintf(listaAlunos, "%d|%s|%d/%d/%d|%d\n", aluno.id, aluno.nome, aluno.diaNasc, aluno.mesNasc, aluno.anoNasc, aluno.idade);
 			
-			printf("Estudante cadastrado!\n");
+			printf("Estudante cadastrado!\n\n");
+			
+			qntdAlunos++;
 		break;
 		
 		case 1:
@@ -245,7 +262,7 @@ void alterarDadosAluno(){
 			printf("ID nao cadastrado\n\n");
 		break;
 		
-		case 1:
+		case 1:{
 			fflush(stdin);
 			
 			printf("Qual o nome do estudante?: ");
@@ -262,10 +279,40 @@ void alterarDadosAluno(){
 				aluno.idade--;
 			}
 		
-			//Estabelecer quantidade maxima de estudantes com o define para eu criar o vetor
+			Aluno estudantes[qntdAlunos];
+			
+			int cont = 0;
+			
+			while(fscanf(listaAlunos, "%d|%60[^|]|%d/%d/%d|%d", &estudantes[cont].id, &estudantes[cont].nome, &estudantes[cont].diaNasc, &estudantes[cont].mesNasc, &estudantes[cont].anoNasc, &estudantes[cont].idade) == 6){
+				if (aluno.id == estudantes[cont].id){
+					strcpy(estudantes[cont].nome, aluno.nome);
+					estudantes[cont].diaNasc = aluno.diaNasc;
+					estudantes[cont].mesNasc = aluno.mesNasc;
+					estudantes[cont].anoNasc = aluno.anoNasc;
+					estudantes[cont].idade = aluno.idade;
+				}
+				
+				cont++;	
+			}
+			
+			fclose(listaAlunos);
+			
+			FILE *listaAlunos = fopen("Alunos.txt", "w");
+			
+			int i;
+			
+			for (i = 0; i < cont; i++){
+				fprintf(listaAlunos, "%d|%s|%d/%d/%d|%d\n", estudantes[i].id, estudantes[i].nome, estudantes[i].diaNasc, estudantes[i].mesNasc, estudantes[i].anoNasc, estudantes[i].idade);
+			}
+			
+			fclose(listaAlunos);
+			
+			printf("Alteracoes bem sucedidas!\n\n");	
+		}
 		
 		break;
 		
+			
 		case 2:
 			printf("ID invalido\n\n");
 		break;
