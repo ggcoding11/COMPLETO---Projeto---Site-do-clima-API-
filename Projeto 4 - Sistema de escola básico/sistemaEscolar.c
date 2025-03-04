@@ -10,6 +10,7 @@ int qntdAlunos = 0;
 
 void cadastrarAluno();
 void alterarDadosAluno();
+void removerAluno();
 
 int verificarID(int *id);
 void finalizar();
@@ -28,7 +29,7 @@ int main(){
 	if (listaAlunos){
 		int id;
 		
-		while (fscanf(listaAlunos, "%d|", &id) == 1){
+		while (fscanf(listaAlunos, "%d|%*[^|]|%*d/%*d/%*d|%*d", &id) == 1) {
 			qntdAlunos++;
 		}
 	}
@@ -48,24 +49,29 @@ void finalizar(){
 	getchar();
 }
 
-int verificarID(int *id){
-	if (*id > 0){
-		FILE *listaAlunos = fopen("Alunos.txt", "r");
-	
-		Aluno aluno;
-		
-		while (fscanf(listaAlunos, "%d|", &aluno.id) == 1){
-			if (aluno.id == *id){
-				return 1;		
-			}
-		}
-		
-		fclose(listaAlunos);
-		
-		return 0;
-	} else {
-		return 2;
-	}
+int verificarID(int *id) {
+    if (*id > 0) {
+        FILE *listaAlunos = fopen("Alunos.txt", "r");
+
+        if (!listaAlunos) {
+            printf("Erro ao abrir o arquivo!\n");
+            return 2;  
+        }
+
+        int idLido;
+
+        while (fscanf(listaAlunos, "%d|%*[^|]|%*d/%*d/%*d|%*d", &idLido) == 1) {
+            if (idLido == *id) {
+                fclose(listaAlunos);
+                return 1;        
+            }
+        }
+
+        fclose(listaAlunos);
+        return 0;
+    } else {
+        return 2;
+    }
 }
 
 void menuPrincipal(){
@@ -105,7 +111,7 @@ void menuPrincipal(){
 void menuAlunos(){
 	system("cls");
 	
-	printf("ALUNOS\n\n");
+	printf("ALUNOS (%d cadastrados)\n\n", qntdAlunos);
 	
 	int opcao;
 	
@@ -129,6 +135,10 @@ void menuAlunos(){
 		
 		case 2:
 			alterarDadosAluno();
+		break;
+		
+		case 3:
+			removerAluno();
 		break;
 		
 		default:
@@ -285,11 +295,7 @@ void alterarDadosAluno(){
 			
 			while(fscanf(listaAlunos, "%d|%60[^|]|%d/%d/%d|%d", &estudantes[cont].id, &estudantes[cont].nome, &estudantes[cont].diaNasc, &estudantes[cont].mesNasc, &estudantes[cont].anoNasc, &estudantes[cont].idade) == 6){
 				if (aluno.id == estudantes[cont].id){
-					strcpy(estudantes[cont].nome, aluno.nome);
-					estudantes[cont].diaNasc = aluno.diaNasc;
-					estudantes[cont].mesNasc = aluno.mesNasc;
-					estudantes[cont].anoNasc = aluno.anoNasc;
-					estudantes[cont].idade = aluno.idade;
+					estudantes[cont] =  aluno;
 				}
 				
 				cont++;	
@@ -313,6 +319,75 @@ void alterarDadosAluno(){
 		break;
 		
 			
+		case 2:
+			printf("ID invalido\n\n");
+		break;
+	}
+	
+	finalizar();
+	
+	menuAlunos();
+}
+
+void removerAluno(){
+	system("cls");
+	
+	printf("REMOCAO DE ESTUDANTE\n\n");
+	
+	FILE *listaAlunos = fopen("Alunos.txt", "r");
+	
+	if (!listaAlunos){
+		printf("Erro na abertura do arquivo!\n");
+		finalizar();
+		
+		return;
+	}
+	
+	Aluno alunoRemovido;
+	
+	printf("Qual o ID do estudante?: ");
+	scanf("%d", &alunoRemovido.id);
+	
+	switch(verificarID(&alunoRemovido.id)){
+		case 0:
+			printf("ID nao cadastrado\n\n");
+		break;
+		
+		case 1:{
+			fflush(stdin);
+			
+			Aluno estudantes[qntdAlunos];
+			
+			Aluno aluno;
+			
+			int cont = 0;
+		
+			while(fscanf(listaAlunos, "%d|%60[^|]|%d/%d/%d|%d", &aluno.id, &aluno.nome, &aluno.diaNasc, &aluno.mesNasc, &aluno.anoNasc, &aluno.idade) == 6){
+				if (aluno.id != alunoRemovido.id){
+					estudantes[cont] = aluno;
+					cont++;
+				}
+			}
+			
+			fclose(listaAlunos);
+			
+			FILE *listaAlunos = fopen("Alunos.txt", "w");
+			
+			int i;
+			
+			for (i = 0; i < cont; i++){
+				fprintf(listaAlunos, "%d|%s|%d/%d/%d|%d\n", estudantes[i].id, estudantes[i].nome, estudantes[i].diaNasc, estudantes[i].mesNasc, estudantes[i].anoNasc, estudantes[i].idade);
+			}
+			
+			fclose(listaAlunos);	
+			
+			printf("Remocao de estudante bem sucedida!\n\n");
+			
+			qntdAlunos--;
+		}
+		
+		break;
+	
 		case 2:
 			printf("ID invalido\n\n");
 		break;
