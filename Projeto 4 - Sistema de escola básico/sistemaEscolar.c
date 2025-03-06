@@ -11,6 +11,7 @@ int qntdAlunos = 0;
 void cadastrarAluno();
 void alterarDadosAluno();
 void removerAluno();
+void listarAluno();
 
 int verificarID(int *id);
 void finalizar();
@@ -52,11 +53,6 @@ void finalizar(){
 int verificarID(int *id) {
     if (*id > 0) {
         FILE *listaAlunos = fopen("Alunos.txt", "r");
-
-        if (!listaAlunos) {
-            printf("Erro ao abrir o arquivo!\n");
-            return 2;  
-        }
 
         int idLido;
 
@@ -111,7 +107,7 @@ void menuPrincipal(){
 void menuAlunos(){
 	system("cls");
 	
-	printf("ALUNOS (%d cadastrados)\n\n", qntdAlunos);
+	printf("ALUNOS | %d cadastrado(s) |\n\n", qntdAlunos);
 	
 	int opcao;
 	
@@ -141,35 +137,12 @@ void menuAlunos(){
 			removerAluno();
 		break;
 		
-		default:
-			menuAlunos();
-		break;
-	}
-}
-
-void menuNotas(){
-	system("cls");
-	
-	printf("NOTAS\n\n");
-	
-	int opcao;
-	
-	printf("1 - Cadastro de notas\n");
-	printf("2 - Alteracao das notas do estudante\n");
-	printf("3 - Remocao das notas\n");
-	printf("4 - Listagem do boletim do estudante\n");
-	printf("0 - Voltar para o menu principal\n\n");
-	
-	printf("Opcao: ");
-	scanf("%d", &opcao);
-	
-	switch(opcao){
-		case 0:
-			menuPrincipal();
+		case 4:
+			listarAluno();
 		break;
 		
 		default:
-			menuNotas();
+			menuAlunos();
 		break;
 	}
 }
@@ -191,6 +164,8 @@ void cadastrarAluno(){
 	if (!listaAlunos){
 		printf("Erro na abertura do arquivo!\n");
 		finalizar();
+		
+		menuAlunos();
 		
 		return;
 	}
@@ -258,6 +233,8 @@ void alterarDadosAluno(){
 	if (!listaAlunos){
 		printf("Erro na abertura do arquivo!\n");
 		finalizar();
+		
+		menuAlunos();
 		
 		return;
 	}
@@ -340,6 +317,8 @@ void removerAluno(){
 		printf("Erro na abertura do arquivo!\n");
 		finalizar();
 		
+		menuAlunos();
+		
 		return;
 	}
 	
@@ -396,4 +375,131 @@ void removerAluno(){
 	finalizar();
 	
 	menuAlunos();
+}
+
+void listarAluno(){
+	system("cls");
+	
+	printf("LISTAGEM DE ESTUDANTES\n\n");
+	
+	FILE *listaAlunos = fopen("Alunos.txt", "r");
+					
+	if (!listaAlunos){
+		printf("Erro na abertura do arquivo!\n");
+		finalizar();
+		
+		menuAlunos();
+		
+		return;
+	}
+	
+	int opcao;
+	
+	printf("1 - Listagem individual\n");
+	printf("2 - Listagem geral\n\n");
+	
+	printf("Opcao: ");
+	scanf("%d", &opcao);
+	
+	switch(opcao){
+		case 1:{
+			system("cls");
+						
+			int idLido;
+			
+			printf("Qual o ID do estudante?: ");
+			scanf("%d", &idLido);
+			
+			switch(verificarID(&idLido)){
+				
+				case 0:
+					printf("ID nao cadastrado\n\n");
+				break;
+				
+				case 1:{
+					fflush(stdin);
+					
+					Aluno aluno;
+					
+					while(fscanf(listaAlunos, "%d|%60[^|]|%d/%d/%d|%d", &aluno.id, &aluno.nome, &aluno.diaNasc, &aluno.mesNasc, &aluno.anoNasc, &aluno.idade) == 6){	
+						if (idLido == aluno.id){
+							printf("Nome: %s\n", aluno.nome);
+							printf("Data de nascimento: %d/%d/%d\n", aluno.diaNasc, aluno.mesNasc, aluno.anoNasc);
+							printf("Idade: %d\n\n", aluno.idade);
+						}
+					}
+				}
+				
+				break;
+			
+				case 2:
+					printf("ID invalido\n\n");
+				break;
+			}
+		}
+			
+		break;
+		
+		case 2:{
+			system("cls");
+			
+			fflush(stdin);
+			
+			Aluno aluno;
+			
+			int encontrou = 0;
+			
+			while(fscanf(listaAlunos, "%d|%60[^|]|%d/%d/%d|%d", &aluno.id, &aluno.nome, &aluno.diaNasc, &aluno.mesNasc, &aluno.anoNasc, &aluno.idade) == 6){	
+				printf("Nome: %s\n", aluno.nome);
+				printf("Data de nascimento: %d/%d/%d\n", aluno.diaNasc, aluno.mesNasc, aluno.anoNasc);
+				printf("Idade: %d\n\n", aluno.idade);
+				
+				encontrou = 1;
+			}
+			
+			if (!encontrou){
+				printf("Nenhum estudante cadastrado!\n\n");
+			}
+		}
+		
+		break;
+		
+		default:
+			printf("Opcao invalida!\n\n");
+		break;
+		
+	}
+	
+	fclose(listaAlunos);
+	
+	finalizar();
+			
+	menuAlunos();
+}
+
+void menuNotas(){
+	system("cls");
+	
+	printf("NOTAS\n\n");
+	
+	int opcao;
+	
+	printf("1 - Cadastro de notas\n");
+	printf("2 - Alteracao das notas do estudante\n");
+	printf("3 - Remocao das notas\n");
+	printf("4 - Listagem do boletim do estudante\n");
+	printf("0 - Voltar para o menu principal\n\n");
+	
+	printf("Opcao: ");
+	scanf("%d", &opcao);
+	
+	switch(opcao){
+		case 0:
+			menuPrincipal();
+		break;
+		
+		default:
+			menuNotas();
+		break;
+	}
 }
