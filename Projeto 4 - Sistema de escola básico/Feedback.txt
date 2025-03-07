@@ -1,0 +1,2 @@
+1) Ao invés de usar o while e flags como "encontrou = 1", use o do while. Assim
+a repetição para automaticamente quando o dado for encontrado
