@@ -13,14 +13,22 @@ void alterarDadosAluno();
 void removerAluno();
 void listarAluno();
 
+void cadastrarNota();
+
 int verificarID(int *id);
 void finalizar();
 
 typedef struct{
+	char materia[21];
+	float n1, n2, media;
+} Nota;
+
+typedef struct{
 	int id;
 	char nome[61];
-	int diaNasc, mesNasc, anoNasc;
-	int idade;
+	int diaNasc, mesNasc, anoNasc, idade;
+	
+	Nota nota;
 } Aluno;
 
 int main(){
@@ -64,6 +72,27 @@ int verificarID(int *id) {
         }
 
         fclose(listaAlunos);
+        return 0;
+    } else {
+        return 2;
+    }
+}
+
+int verificarNota(int *id, char materia[]) {
+    if (*id > 0) {
+        FILE *listaNotas = fopen("Notas.txt", "r");
+
+        int idLido;
+        char materiaLida[21];
+
+        while (fscanf(listaNotas, "%d|%20[^|]|%*f|%*f|%*f", &idLido, materiaLida) == 2) {
+            if ((idLido == *id) && (strcmp(materiaLida, materia) == 0)) {
+                fclose(listaNotas);
+                return 1;        
+            }
+        }
+
+        fclose(listaNotas);
         return 0;
     } else {
         return 2;
@@ -180,7 +209,7 @@ void cadastrarAluno(){
 			fflush(stdin);
 			
 			printf("Qual o nome do estudante?: ");
-			scanf("%60[^\n]", &aluno.nome);
+			scanf("%60[^\n]", aluno.nome);
 			
 			do {
 				printf("Qual a data de nascimento (DD MM AA)?: ");
@@ -253,7 +282,7 @@ void alterarDadosAluno(){
 			fflush(stdin);
 			
 			printf("Qual o nome do estudante?: ");
-			scanf("%60[^\n]", &aluno.nome);
+			scanf("%60[^\n]", aluno.nome);
 			
 			do {
 				printf("Qual a data de nascimento (DD MM AA)?: ");
@@ -270,7 +299,7 @@ void alterarDadosAluno(){
 			
 			int cont = 0;
 			
-			while(fscanf(listaAlunos, "%d|%60[^|]|%d/%d/%d|%d", &estudantes[cont].id, &estudantes[cont].nome, &estudantes[cont].diaNasc, &estudantes[cont].mesNasc, &estudantes[cont].anoNasc, &estudantes[cont].idade) == 6){
+			while(fscanf(listaAlunos, "%d|%60[^|]|%d/%d/%d|%d", &estudantes[cont].id, estudantes[cont].nome, &estudantes[cont].diaNasc, &estudantes[cont].mesNasc, &estudantes[cont].anoNasc, &estudantes[cont].idade) == 6){
 				if (aluno.id == estudantes[cont].id){
 					estudantes[cont] =  aluno;
 				}
@@ -341,7 +370,7 @@ void removerAluno(){
 			
 			int cont = 0;
 		
-			while(fscanf(listaAlunos, "%d|%60[^|]|%d/%d/%d|%d", &aluno.id, &aluno.nome, &aluno.diaNasc, &aluno.mesNasc, &aluno.anoNasc, &aluno.idade) == 6){
+			while(fscanf(listaAlunos, "%d|%60[^|]|%d/%d/%d|%d", &aluno.id, aluno.nome, &aluno.diaNasc, &aluno.mesNasc, &aluno.anoNasc, &aluno.idade) == 6){
 				if (aluno.id != alunoRemovido.id){
 					estudantes[cont] = aluno;
 					cont++;
@@ -421,8 +450,9 @@ void listarAluno(){
 					
 					Aluno aluno;
 					
-					while(fscanf(listaAlunos, "%d|%60[^|]|%d/%d/%d|%d", &aluno.id, &aluno.nome, &aluno.diaNasc, &aluno.mesNasc, &aluno.anoNasc, &aluno.idade) == 6){	
+					while(fscanf(listaAlunos, "%d|%60[^|]|%d/%d/%d|%d", &aluno.id, aluno.nome, &aluno.diaNasc, &aluno.mesNasc, &aluno.anoNasc, &aluno.idade) == 6){	
 						if (idLido == aluno.id){
+							printf("ID: %d\n", aluno.id);
 							printf("Nome: %s\n", aluno.nome);
 							printf("Data de nascimento: %d/%d/%d\n", aluno.diaNasc, aluno.mesNasc, aluno.anoNasc);
 							printf("Idade: %d\n\n", aluno.idade);
@@ -449,7 +479,8 @@ void listarAluno(){
 			
 			int encontrou = 0;
 			
-			while(fscanf(listaAlunos, "%d|%60[^|]|%d/%d/%d|%d", &aluno.id, &aluno.nome, &aluno.diaNasc, &aluno.mesNasc, &aluno.anoNasc, &aluno.idade) == 6){	
+			while(fscanf(listaAlunos, "%d|%60[^|]|%d/%d/%d|%d", &aluno.id, aluno.nome, &aluno.diaNasc, &aluno.mesNasc, &aluno.anoNasc, &aluno.idade) == 6){	
+				printf("ID: %d\n", aluno.id);
 				printf("Nome: %s\n", aluno.nome);
 				printf("Data de nascimento: %d/%d/%d\n", aluno.diaNasc, aluno.mesNasc, aluno.anoNasc);
 				printf("Idade: %d\n\n", aluno.idade);
@@ -498,8 +529,130 @@ void menuNotas(){
 			menuPrincipal();
 		break;
 		
+		case 1:
+			cadastrarNota();
+		break;
+		
 		default:
 			menuNotas();
 		break;
 	}
+}
+
+void cadastrarNota(){
+	system("cls");
+	
+	printf("CADASTRO DE NOTAS\n\n");
+	
+	FILE *listaNotas = fopen("Notas.txt", "a");
+	
+	if (!listaNotas){
+		printf("Erro na abertura do arquivo!\n");
+		finalizar();
+		
+		menuNotas();
+		
+		return;
+	}
+	
+	Aluno aluno;
+	
+	printf("Qual o ID do estudante?: ");
+	scanf("%d", &aluno.id);
+	
+	printf("Qual a materia?: \n\n");
+	
+	printf("1 - Historia\n");
+	printf("2 - Filosofia\n");
+	printf("3 - Sociologia\n");
+	printf("4 - Geografia\n");
+	printf("5 - Fisica\n");
+	printf("6 - Matematica\n");
+	printf("7 - Quimica\n");
+	printf("8 - Biologia\n\n");
+	
+	int opcao;
+	
+	do {
+		printf("Opcao: ");
+		scanf("%d", &opcao);
+		
+		switch(opcao){
+			case 1:
+				strcpy(aluno.nota.materia, "Historia");
+			break;
+			
+			case 2:
+				strcpy(aluno.nota.materia, "Filosofia");
+			break;
+			
+			case 3:
+				strcpy(aluno.nota.materia, "Sociologia");
+			break;
+			
+			case 4:
+				strcpy(aluno.nota.materia, "Geografia");
+			break;
+			
+			case 5:
+				strcpy(aluno.nota.materia, "Fisica");
+			break;
+			
+			case 6:
+				strcpy(aluno.nota.materia, "Matematica");
+			break;
+			
+			case 7:
+				strcpy(aluno.nota.materia, "Quimica");
+			break;
+			
+			case 8:
+				strcpy(aluno.nota.materia, "Biologia");
+			break;
+			
+			default:
+				printf("Opcao invalida!\n\n");
+			break;
+		}	
+	} while (opcao < 1 || opcao > 8);
+	
+	//Continuar aqui!!
+	
+	switch(verificarNota(&aluno.id, aluno.nota.materia)){
+		case 0:
+			fflush(stdin);
+			
+			printf("Qual o nome do estudante?: ");
+			scanf("%60[^\n]", aluno.nome);
+			
+			do {
+				printf("Qual a data de nascimento (DD MM AA)?: ");
+				scanf("%d %d %d", &aluno.diaNasc, &aluno.mesNasc, &aluno.anoNasc);	
+			} while (aluno.anoNasc >= anoAtual);
+			
+			aluno.idade = anoAtual - aluno.anoNasc;
+			
+			if ((aluno.mesNasc > mesAtual) || (aluno.mesNasc == mesAtual && diaAtual < aluno.diaNasc)){
+				aluno.idade--;
+			}
+		
+			fprintf(listaAlunos, "%d|%s|%d/%d/%d|%d\n", aluno.id, aluno.nome, aluno.diaNasc, aluno.mesNasc, aluno.anoNasc, aluno.idade);
+			
+			printf("Estudante cadastrado!\n\n");
+			
+			qntdAlunos++;
+		break;
+		
+		case 1:
+			printf("ID ja cadastrado\n\n");
+		break;
+		
+		case 2:
+	
+	
+	fclose(listaAlunos);
+	
+	finalizar();
+	
+	menuAlunos();
 }
