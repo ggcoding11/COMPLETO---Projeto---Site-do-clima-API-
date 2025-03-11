@@ -1,5 +1,0 @@
-1) Ao invés de usar o while e flags como "encontrou = 1", use o do while. Assim
-a repetição para automaticamente quando o dado for encontrado
-
-2) O ideal dentro da confecção do código é sempre fazer tudo da forma mais otimizada possivel (ex: usar short int ao invés de int).
-Ou seja, não pense apenas na formna mais resumida possível, mas na forma mais otimizada
