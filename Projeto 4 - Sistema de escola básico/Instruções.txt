@@ -1,0 +1,113 @@
+função verificarID()
+
+retorna 0 - válido, não foi cadastrado ainda
+retorna 1 - válido, já foi cadastrado
+retorna 2 - inválido
+
+1) Cadastro de alunos - CERTO
+
+-Solicitação do ID
+
+-Verificação do ID (para ver se aluno ainda não foi cadastado)
+
+-Se sim, pedir nome e data de nascimento
+
+-A partir da data de nascimento, a idade será calculada
+
+-Escrita dos dados
+
+2) Remoção de aluno - CERTO
+
+-Solicitação do ID
+
+-Verificação do ID (para ver se aluno já foi cadastrado)
+
+-Se sim, basicamente, todos os dados de alunos serão lidos e adicionados em um vetor
+
+-Quando chegar no ID removido, ele será ignorado e não será adicionado ao vetor
+
+- Escrita dos dados do vetor
+
+3) Alteração de aluno - CERTO
+
+-Solicitação do ID
+
+-Verificação do ID (para ver se aluno já foi cadastrado)
+
+-Se o aluno existir mesmo, eu adiciono os dados que vão substituir os antigos em variáveis
+
+-Vou guardando todos os dados da lista em um vetor, mas quando chegar no ID que eu mandei, ele vai adicionar os novos dados no lugar
+
+- Escrita dos dados do vetor
+
+4) Cadastro de nota - CERTO
+
+-Solicitação do ID
+
+-Verificação do ID (para ver se aluno já foi cadastrado)
+
+- Se sim, vai pedir matéria, nota 1 semestre, nota 2 semestre
+
+- A partir disso, a média será calculada
+
+- Escrita dos dados
+
+5) Remoção de notas - CERTO
+
+-Solicitação do ID
+
+-Verificação do ID (para ver se o aluno já foi cadastrado)
+
+-Se sim, vai pedir o nome da matéria
+
+-Todos os dados da lista de notas serão colocados em um vetor, exceto se for o ID e a matéria que eu disse para remover
+
+-Depois basta escrever tudo no txt
+
+- Se nada relativo a materia tal for encontrado, mostre "Notas não cadastradas!"
+
+6) Alteração de notas - Certo
+
+-Solicitação do ID
+
+-Verificação do ID (para ver se o aluno já foi cadastrado)
+
+-Se sim, vai pedir o nome da matéria
+
+-Todos os dados da lista de notas serão colocados em um vetor
+
+-Quando chegar na matéria tal, o sistema vai pedir a nota 1 e a nota 2 que vão substituir as antigas
+
+-Depois vai ser escrito tudo no txt
+
+-Se não achar, mostrar "Notas não cadastradas!"
+
+6) Listagem de boletim - CERTO
+
+-Solicitação do ID
+
+-Verificação do ID (para ver se aluno já foi cadastrado)
+
+- Se sim, o arquivo de notas será lido, em busca de todos os conjuntos de notas com aquele ID em específico
+
+-Se não encontrar nenhuma nota, eu coloco "Sem notas cadastradas!"
+
+7) Listagem de alunos - CERTO
+
+-Sem segredo, apenas vou ler todo o arquivo txt de alunos
+
+-Se nada for encontrado, "Sem alunos cadastrados!"
+
+8) Pesquisar alunos - CERTO
+
+-2 opções: por ID ou por nome
+
+-Se for por ID, ele vai pedir o ID
+
+-Verificação do ID (pra ver se o aluno já foi cadastrado)
+
+- Se sim, ele vai ler o arquivo de alunos em busca dos dados daquele id
+
+- Agora se for por nome, eu vou pedir um nome
+
+- Tudo que o nome escrito bater como substring de um dos da lista eu vou mostrar
