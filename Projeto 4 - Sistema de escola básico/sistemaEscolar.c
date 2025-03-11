@@ -629,7 +629,7 @@ void cadastrarNota(){
 					
 					
 					do { 
-						printf("Qual a primeira nota?: ");
+						printf("Qual a segunda nota?: ");
 						scanf("%f", &aluno.nota.n2);
 					} while (aluno.nota.n2 < 0 || aluno.nota.n2 > 10);
 					
