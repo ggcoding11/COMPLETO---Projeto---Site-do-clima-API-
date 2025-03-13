@@ -1,25 +1,26 @@
+let expressao = ""
 let display = document.getElementById("display")
 
-let expressao = ""
-
 document.querySelectorAll(".btn").forEach(botao => {
-    botao.addEventListener("click", function(){
+    botao.addEventListener("click", function () {
         let valor = this.innerHTML
 
-        if (valor === "="){
-            try {
-                let resultado = eval(expressao)
-                display.innerHTML = resultado
-            } catch(erro){
-                display.innerHTML = "Erro!"
-                expressao = ""
-            }
-        } else if (valor === "C"){
+        if (valor === "C") {
             display.innerHTML = ""
             expressao = ""
+        } else if (valor === "=") {
+
         } else {
-            expressao += valor
-            display.innerHTML = expressao
+
+            if (valores.length < 5) {
+                if (valor === "-" || valor === "*" || valor === "+" || valor === "/") {
+                    expressao += " " + valor + " "
+                    display.innerHTML = expressao
+                } else {
+                    expressao += valor
+                    display.innerHTML = expressao
+                }
+            }
         }
     })
 })
