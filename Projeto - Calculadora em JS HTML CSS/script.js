@@ -3,7 +3,7 @@ let display = document.getElementById("display")
 
 document.querySelectorAll(".btn").forEach(botao => {
     botao.addEventListener("click", function () {
-        let valor = this.innerHTML
+        let valor = this.innerText
 
         let valores = expressao.match(/(\d+|[\+\-\*\/])/g);
 
@@ -34,13 +34,11 @@ document.querySelectorAll(".btn").forEach(botao => {
                         display.innerHTML = "Erro!"
                         break;
                 }
-
-                expressao = ""
             } else {
                 display.innerHTML = "Erro!"
-                expressao = ""
             }
 
+            expressao = ""
         } else {
             expressao += valor
             display.innerHTML = expressao
