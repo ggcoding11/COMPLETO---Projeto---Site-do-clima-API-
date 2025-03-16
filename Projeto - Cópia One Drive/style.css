@@ -22,14 +22,20 @@ body{
 
 .navbar {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
+}
+
+.faixaopcoes{
+    margin-top: 70px;
 }
 
 .sidebar {
     position: fixed;
     top: 0;
     left: 0;
-    margin-top: 50px;
+    margin-top: 120px;
 
     width: 240px;
     height: 100%;
