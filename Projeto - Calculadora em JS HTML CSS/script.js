@@ -1,47 +1,65 @@
-let expressao = ""
 let display = document.getElementById("display")
+let expressao = ""
+let n1 = ""
+let n2 = ""
+
+let operacaoFeita = false
+let operacaoCarac = ""
 
 document.querySelectorAll(".btn").forEach(botao => {
     botao.addEventListener("click", function () {
         let valor = this.innerText
 
-        let valores = expressao.match(/(\d+|[\+\-\*\/])/g);
+        if (operacaoFeita === false) {
+            if (!isNaN(Number(valor))) {
+                n1 += valor
+                expressao += valor
+            } else if (valor === "+" || valor === "-" || valor === "*" || valor === "/") {
+                operacaoFeita = true
+                operacaoCarac = valor
+                expressao += valor
+            }
+        } else {
+            if (!isNaN(Number(valor))){
+                n2 += valor
+                expressao += valor
+            }
+        }
 
-        if (valor === "C") {
-            display.innerHTML = ""
+        if (valor === "C"){
             expressao = ""
-        } else if (valor === "=") {
-            let n1 = Number(valores[0])
-            let n2 = Number(valores[2])
+            operacaoFeita = false
+            operacaoCarac = ""
+            n1 = ""
+            n2 = ""
+        }
 
-            if (!isNaN(n1) && !isNaN(n2)) {
-                switch (valores[1]) {
+        if (valor === "="){
+            if (operacaoCarac === "+" || operacaoCarac === "-" || operacaoCarac === "*" || operacaoCarac === "/"){
+                
+                n1 = Number(n1)
+                n2 = Number(n2)
+                
+                switch(operacaoCarac){
                     case "+":
-                        display.innerHTML = n1 + n2
-                        break;
+                        expressao = n1 + n2
+                    break
+
                     case "-":
-                        display.innerHTML = n1 - n2
-                        break;
+                        expressao = n1 - n2
+                    break
+
                     case "*":
-                        display.innerHTML = n1 * n2
-                        break;
+                        expressao = n1 * n2
+                    break
 
                     case "/":
-                        display.innerHTML = n1 / n2
-                        break;
-
-                    default:
-                        display.innerHTML = "Erro!"
-                        break;
+                        expressao = n1 / n2
+                    break
                 }
-            } else {
-                display.innerHTML = "Erro!"
-            }
-
-            expressao = ""
-        } else {
-            expressao += valor
-            display.innerHTML = expressao
+            } 
         }
+        
+        display.innerText = expressao
     })
 })
