@@ -7,6 +7,7 @@ void menuAlunos();
 void menuNotas();
 
 int qntdAlunos = 0;
+int qntdNotas = 0;
 
 void cadastrarAluno();
 void alterarDadosAluno();
@@ -14,9 +15,10 @@ void removerAluno();
 void listarAluno();
 
 void cadastrarNota();
+void alterarNota();
 
-int verificarID(int *id);
-void finalizar();
+int verificarID(int id);
+int verificarNota(int id, char materia[]);
 
 typedef struct{
 	char materia[21];
@@ -41,44 +43,49 @@ int main(){
 		while (fscanf(listaAlunos, "%d|%*[^|]|%*d/%*d/%*d|%*d", &id) == 1) {
 			qntdAlunos++;
 		}
+		
+		fclose(listaAlunos);
 	}
 	
-	fclose(listaAlunos);
+	FILE *listaNotas = fopen("Notas.txt", "r");
+	
+	if (listaNotas){
+		char texto[100];
+		
+		while (fgets(texto, sizeof(texto), listaNotas) != NULL){
+			qntdNotas++;
+		}
+		
+		fclose(listaNotas);
+	}
 		
 	menuPrincipal();
 	
 	return 0;
 }
 
-void finalizar(){
-	fflush(stdin);
-	
-	printf("Pressione qualquer tecla para continuar!");
-	
-	getchar();
-}
-
-int verificarID(int *id) {
-    if (*id > 0) {
+int verificarID(int id) {
+    if (id > 0) {
         FILE *listaAlunos = fopen("Alunos.txt", "r");
 
         int idLido;
-
+	
         while (fscanf(listaAlunos, "%d|%*[^|]|%*d/%*d/%*d|%*d", &idLido) == 1) {
-            if (idLido == *id) {
+            if (idLido == id) {
                 fclose(listaAlunos);
                 return 1;        
             }
         }
 
         fclose(listaAlunos);
+        
         return 0;
     } else {
         return 2;
     }
 }
 
-int verificarNota(int *id, char materia[]) {
+int verificarNota(int id, char materia[]) {
     
     FILE *listaNotas = fopen("Notas.txt", "r");
 
@@ -86,7 +93,7 @@ int verificarNota(int *id, char materia[]) {
     char materiaLida[21];
 
     while (fscanf(listaNotas, "%d|%20[^|]|%*f|%*f|%*f", &idLido, materiaLida) == 2) {
-        if ((idLido == *id) && (strcmp(materiaLida, materia) == 0)) {
+        if ((idLido == id) && (strcmp(materiaLida, materia) == 0)) {
             fclose(listaNotas);
             return 1;        
         }
@@ -112,7 +119,9 @@ void menuPrincipal(){
 	
 	switch(opcao){
 		case 0:
-			printf("Saindo...");
+			
+			system("pause");
+			
 			return;
 		break;
 		
@@ -182,7 +191,7 @@ void cadastrarAluno(){
 	
 	if (!listaAlunos){
 		printf("Erro na abertura do arquivo!\n");
-		finalizar();
+		system("pause");
 		
 		menuAlunos();
 		
@@ -194,7 +203,7 @@ void cadastrarAluno(){
 	printf("Qual o ID do estudante?: ");
 	scanf("%d", &aluno.id);
 	
-	switch(verificarID(&aluno.id)){
+	switch(verificarID(aluno.id)){
 		case 0:
 			fflush(stdin);
 			
@@ -237,7 +246,7 @@ void cadastrarAluno(){
 	
 	fclose(listaAlunos);
 	
-	finalizar();
+	system("pause");
 	
 	menuAlunos();
 }
@@ -251,7 +260,7 @@ void alterarDadosAluno(){
 	
 	if (!listaAlunos){
 		printf("Erro na abertura do arquivo!\n");
-		finalizar();
+		system("pause");
 		
 		menuAlunos();
 		
@@ -263,7 +272,7 @@ void alterarDadosAluno(){
 	printf("Qual o ID do estudante?: ");
 	scanf("%d", &aluno.id);
 	
-	switch(verificarID(&aluno.id)){
+	switch(verificarID(aluno.id)){
 		case 0:
 			printf("ID nao cadastrado\n\n");
 		break;
@@ -326,7 +335,7 @@ void alterarDadosAluno(){
 	
 	fclose(listaAlunos);
 	
-	finalizar();
+	system("pause");
 	
 	menuAlunos();
 }
@@ -340,7 +349,7 @@ void removerAluno(){
 	
 	if (!listaAlunos){
 		printf("Erro na abertura do arquivo!\n");
-		finalizar();
+		system("pause");
 		
 		menuAlunos();
 		
@@ -352,7 +361,7 @@ void removerAluno(){
 	printf("Qual o ID do estudante?: ");
 	scanf("%d", &idRemovido);
 	
-	switch(verificarID(&idRemovido)){
+	switch(verificarID(idRemovido)){
 		case 0:
 			printf("ID nao cadastrado\n\n");
 		break;
@@ -397,7 +406,7 @@ void removerAluno(){
 	
 	fclose(listaAlunos);
 	
-	finalizar();
+	system("pause");
 	
 	menuAlunos();
 }
@@ -411,7 +420,7 @@ void listarAluno(){
 					
 	if (!listaAlunos){
 		printf("Erro na abertura do arquivo!\n");
-		finalizar();
+		system("pause");
 		
 		menuAlunos();
 		
@@ -435,7 +444,7 @@ void listarAluno(){
 			printf("Qual o ID do estudante?: ");
 			scanf("%d", &idLido);
 			
-			switch(verificarID(&idLido)){
+			switch(verificarID(idLido)){
 				
 				case 0:
 					printf("ID nao cadastrado\n\n");
@@ -499,7 +508,7 @@ void listarAluno(){
 	
 	fclose(listaAlunos);
 	
-	finalizar();
+	system("pause");
 			
 	menuAlunos();
 }
@@ -529,6 +538,10 @@ void menuNotas(){
 			cadastrarNota();
 		break;
 		
+		case 2:
+			alterarNota();
+		break;
+		
 		default:
 			menuNotas();
 		break;
@@ -544,7 +557,7 @@ void cadastrarNota(){
 	
 	if (!listaNotas){
 		printf("Erro na abertura do arquivo!\n");
-		finalizar();
+		system("pause");
 		
 		menuNotas();
 		
@@ -556,7 +569,7 @@ void cadastrarNota(){
 	printf("Qual o ID do estudante?: ");
 	scanf("%d", &aluno.id);
 	
-	switch(verificarID(&aluno.id)){
+	switch(verificarID(aluno.id)){
 		case 0:
 			printf("ID nao cadastrado\n\n");
 		break;
@@ -618,7 +631,7 @@ void cadastrarNota(){
 				}	
 			} while (opcao < 1 || opcao > 8);
 			
-			switch(verificarNota(&aluno.id, aluno.nota.materia)){
+			switch(verificarNota(aluno.id, aluno.nota.materia)){
 				case 0:
 					fflush(stdin);
 					
@@ -638,6 +651,8 @@ void cadastrarNota(){
 					fprintf(listaNotas, "%d|%s|%f|%f|%f\n", aluno.id, aluno.nota.materia, aluno.nota.n1, aluno.nota.n2, aluno.nota.media);
 					
 					printf("Nota cadastrada!\n\n");
+					
+					qntdNotas++;
 				break;
 				
 				case 1:
@@ -655,7 +670,154 @@ void cadastrarNota(){
 	
 	fclose(listaNotas);
 	
-	finalizar();
+	system("pause");
+	
+	menuNotas();
+}
+
+void alterarNota(){
+	system("cls");
+	
+	printf("ALTERACAO DA NOTA\n\n");
+	
+	FILE *listaNotas = fopen("Notas.txt", "r");
+	
+	if (!listaNotas){
+		printf("Erro na abertura do arquivo!\n");
+		system("pause");
+		
+		menuNotas();
+		
+		return;
+	}
+	
+	Aluno aluno;
+	
+	printf("Qual o ID do estudante?: ");
+	scanf("%d", &aluno.id);
+	
+	switch(verificarID(aluno.id)){
+		case 0:
+			printf("ID nao cadastrado\n\n");
+		break;
+		
+			case 1:{
+			fflush(stdin);
+			
+			printf("Qual a materia?: \n\n");
+	
+			printf("1 - Historia\n");
+			printf("2 - Filosofia\n");
+			printf("3 - Sociologia\n");
+			printf("4 - Geografia\n");
+			printf("5 - Fisica\n");
+			printf("6 - Matematica\n");
+			printf("7 - Quimica\n");
+			printf("8 - Biologia\n\n");
+			
+			int opcao;
+			
+			do {
+				printf("Opcao: ");
+				scanf("%d", &opcao);
+				
+				switch(opcao){
+					case 1:
+						strcpy(aluno.nota.materia, "Historia");
+					break;
+					
+					case 2:	
+						strcpy(aluno.nota.materia, "Filosofia");
+					break;
+					
+					case 3:
+						strcpy(aluno.nota.materia, "Sociologia");
+					break;
+					
+					case 4:
+						strcpy(aluno.nota.materia, "Geografia");
+					break;
+					
+					case 5:
+						strcpy(aluno.nota.materia, "Fisica");
+					break;
+					
+					case 6:
+						strcpy(aluno.nota.materia, "Matematica");
+					break;
+					
+					case 7:
+						strcpy(aluno.nota.materia, "Quimica");
+					break;
+					
+					case 8:
+						strcpy(aluno.nota.materia, "Biologia");
+					break;
+					
+					default:
+						printf("Opcao invalida!\n\n");
+					break;
+				}	
+			} while (opcao < 1 || opcao > 8);
+			
+			switch(verificarNota(aluno.id, aluno.nota.materia)){
+				case 0:
+					printf("Nota nao cadastrada!\n\n");
+				break;
+				
+				case 1: {
+					do { 
+						printf("Qual a primeira nota?: ");
+						scanf("%f", &aluno.nota.n1);
+					} while (aluno.nota.n1 < 0 || aluno.nota.n1 > 10);
+					
+					
+					do { 
+						printf("Qual a segunda nota?: ");
+						scanf("%f", &aluno.nota.n2);
+					} while (aluno.nota.n2 < 0 || aluno.nota.n2 > 10);
+					
+					aluno.nota.media = (aluno.nota.n1 + aluno.nota.n2)/2;
+					
+					Aluno estudantes[qntdNotas];
+			
+					int cont = 0;
+					
+					while(fscanf(listaNotas, "%d|%20[^|]|%f|%f|%f", &estudantes[cont].id, estudantes[cont].nota.materia, &estudantes[cont].nota.n1, &estudantes[cont].nota.n2, &estudantes[cont].nota.media) == 5){
+						if ((aluno.id == estudantes[cont].id) && (strcmp(aluno.nota.materia, estudantes[cont].nota.materia) == 0)){
+							estudantes[cont] =  aluno;
+						}
+						
+						cont++;	
+					}	
+					
+					FILE *listaNotasNova = fopen("Notas.txt", "w");
+			
+					int i;
+					
+					for (i = 0; i < cont; i++){
+						fprintf(listaNotasNova, "%d|%s|%f|%f|%f\n", estudantes[i].id, estudantes[i].nota.materia, estudantes[i].nota.n1, estudantes[i].nota.n2, estudantes[i].nota.media);
+					}
+					
+					fclose(listaNotasNova);
+					
+					printf("Alteracoes bem sucedidas!\n\n");
+				}
+				
+				break;
+			}	
+		}
+		
+		break;
+		
+		case 2:
+			printf("ID invalido\n\n");
+		break;
+	}
+	
+	fclose(listaNotas);
+	
+	system("pause");
 	
 	menuNotas();
 }
