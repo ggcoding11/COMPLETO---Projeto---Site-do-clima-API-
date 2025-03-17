@@ -34,7 +34,7 @@ int main(){
 		printf("3 - Buscar livro\n");
 		printf("4 - Remover livro\n");
 		printf("0 - Sair\n\n");
-		printf("Escolha uma opção: ");
+		printf("Escolha uma opï¿½ï¿½o: ");
 		scanf("%d", &opcao); 
 		
 		switch(opcao){
@@ -54,7 +54,7 @@ int main(){
 				printf("Saindo...\n");
 				break;
 			default:	
-				printf("Opção inválida!\n");
+				printf("Opï¿½ï¿½o invï¿½lida!\n");
 		}
 		
 	} while (opcao);
@@ -92,9 +92,9 @@ void adicionarLivro(){
 	}
 	
 	if (repetido){
-		printf("ID já cadastrado!");
+		printf("ID jï¿½ cadastrado!");
 	} else {
-		printf("Título: ");
+		printf("Tï¿½tulo: ");
 		fgets(livro.titulo, MAX_TITULO, stdin);
 		
 		strtok(livro.titulo, "\n"); //Remove o \n como delimitador
@@ -124,10 +124,10 @@ void listarLivros(){
     Livro livro;
     printf("Lista de livros:\n");
     
-    //Esse [^|] quer dizer ler até 99 caracteres até encontrar o |
+    //Esse [^|] quer dizer ler atï¿½ 99 caracteres atï¿½ encontrar o |
     
     while (fscanf(file, "%d|%99[^|]|%99[^\n]", &livro.id, livro.titulo, livro.autor) == 3){
-    	printf("ID: %d, Título: %s, Autor: %s\n", livro.id, livro.titulo, livro.autor);
+    	printf("ID: %d, Tï¿½tulo: %s, Autor: %s\n", livro.id, livro.titulo, livro.autor);
 	}
  	
 	sleep(3);   
@@ -147,7 +147,7 @@ void buscarLivro(){
     
     while (fscanf(file, "%d|%99[^|]|%99[^\n]", &livro.id, livro.titulo, livro.autor) == 3){
     	if (livro.id == id){
-    		printf("Livro encontrado: ID: %d, Título: %s, Autor: %s\n", livro.id, livro.titulo, livro.autor);
+    		printf("Livro encontrado: ID: %d, Tï¿½tulo: %s, Autor: %s\n", livro.id, livro.titulo, livro.autor);
     		
     		sleep(3);
     		
@@ -170,7 +170,7 @@ void removerLivro() {
     getchar();  // Evita problemas com buffer
 
     // Criamos um buffer para armazenar os dados que queremos manter
-    Livro livros[100]; // Supondo no máximo 100 livros, pode ser ajustado
+    Livro livros[100]; // Supondo no mï¿½ximo 100 livros, pode ser ajustado
     int count = 0;
 
     Livro livro;
@@ -178,18 +178,17 @@ void removerLivro() {
         if (livro.id == id) {
             encontrado = 1; // Marcamos que o livro foi encontrado
         } else {
-            livros[count++] = livro; // Guardamos apenas os livros que queremos manter
+            livros[count++] = livro; 
         }
     }
 
     fclose(file);
 
     if (!encontrado) {
-        printf("Livro não encontrado.\n");
+        printf("Livro nï¿½o encontrado.\n");
         return;
     }
 
-    // Reabrimos o arquivo no modo "w" para sobrescrevê-lo com os livros restantes
     file = fopen("biblioteca.txt", "w");
     if (!file) {
         printf("Erro ao abrir o arquivo para escrita!\n");
