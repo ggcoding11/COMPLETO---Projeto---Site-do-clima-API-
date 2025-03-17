@@ -16,6 +16,7 @@ void listarAluno();
 
 void cadastrarNota();
 void alterarNota();
+void removerNota();
 
 int verificarID(int id);
 int verificarNota(int id, char materia[]);
@@ -34,6 +35,7 @@ typedef struct{
 } Aluno;
 
 int main(){
+	system("color 17");
 	
 	FILE *listaAlunos = fopen("Alunos.txt", "r");
 	
@@ -542,6 +544,10 @@ void menuNotas(){
 			alterarNota();
 		break;
 		
+		case 3:
+			removerNota();
+		break;
+		
 		default:
 			menuNotas();
 		break;
@@ -678,7 +684,7 @@ void cadastrarNota(){
 void alterarNota(){
 	system("cls");
 	
-	printf("ALTERACAO DA NOTA\n\n");
+	printf("ALTERACAO DE NOTA\n\n");
 	
 	FILE *listaNotas = fopen("Notas.txt", "r");
 	
@@ -701,7 +707,7 @@ void alterarNota(){
 			printf("ID nao cadastrado\n\n");
 		break;
 		
-			case 1:{
+		case 1:{
 			fflush(stdin);
 			
 			printf("Qual a materia?: \n\n");
@@ -806,8 +812,8 @@ void alterarNota(){
 				
 				break;
 			}	
-		}
-		
+		}	
+	
 		break;
 		
 		case 2:
@@ -820,4 +826,145 @@ void alterarNota(){
 	system("pause");
 	
 	menuNotas();
+}
+
+void removerNota(){
+	system("cls");
+	
+	printf("REMOCAO DE NOTA\n\n");
+	
+	FILE *listaNotas = fopen("Notas.txt", "r");
+	
+	if (!listaNotas){
+		printf("Erro na abertura do arquivo!\n");
+		system("pause");
+		
+		menuNotas();
+		
+		return;
+	}
+	
+	int idRemovido;
+	char materiaRemovida[21];
+	
+	printf("Qual o ID do estudante?: ");
+	scanf("%d", &idRemovido);
+	
+	switch(verificarID(idRemovido)){
+		case 0:
+			printf("ID nao cadastrado\n\n");
+		break;
+		
+		case 1:{
+			fflush(stdin);
+			
+			printf("Qual a materia?: \n\n");
+	
+			printf("1 - Historia\n");
+			printf("2 - Filosofia\n");
+			printf("3 - Sociologia\n");
+			printf("4 - Geografia\n");
+			printf("5 - Fisica\n");
+			printf("6 - Matematica\n");
+			printf("7 - Quimica\n");
+			printf("8 - Biologia\n\n");
+			
+			int opcao;
+			
+			do {
+				printf("Opcao: ");
+				scanf("%d", &opcao);
+				
+				switch(opcao){
+					case 1:
+						strcpy(materiaRemovida, "Historia");
+					break;
+					
+					case 2:	
+						strcpy(materiaRemovida, "Filosofia");
+					break;
+					
+					case 3:
+						strcpy(materiaRemovida, "Sociologia");
+					break;
+					
+					case 4:
+						strcpy(materiaRemovida, "Geografia");
+					break;
+					
+					case 5:
+						strcpy(materiaRemovida, "Fisica");
+					break;
+					
+					case 6:
+						strcpy(materiaRemovida, "Matematica");
+					break;
+					
+					case 7:
+						strcpy(materiaRemovida, "Quimica");
+					break;
+					
+					case 8:
+						strcpy(materiaRemovida, "Biologia");
+					break;
+					
+					default:
+						printf("Opcao invalida!\n\n");
+					break;
+				}	
+			} while (opcao < 1 || opcao > 8);
+			
+			switch(verificarNota(idRemovido, materiaRemovida)){
+				case 0:
+					printf("Nota nao cadastrada!\n\n");
+				break;
+				
+				case 1: {
+					fflush(stdin);
+			
+					Aluno aluno;
+					
+					Aluno estudantes[qntdNotas];
+					
+					int cont = 0;
+				
+					while(fscanf(listaNotas, "%d|%20[^|]|%f|%f|%f", &aluno.id, aluno.nota.materia, &aluno.nota.n1, &aluno.nota.n2, &aluno.nota.media) == 5){
+						if ((idRemovido != aluno.id) || (strcmp(materiaRemovida, aluno.nota.materia) != 0)){
+							estudantes[cont] = aluno;
+							
+							cont++;
+						}
+					}	
+					
+					FILE *listaNotasNova = fopen("Notas.txt", "w");
+			
+					int i;
+					
+					for (i = 0; i < cont; i++){
+						fprintf(listaNotasNova, "%d|%s|%f|%f|%f\n", estudantes[i].id, estudantes[i].nota.materia, estudantes[i].nota.n1, estudantes[i].nota.n2, estudantes[i].nota.media);
+					}
+					
+					fclose(listaNotasNova);
+					
+					printf("Remocao de nota bem sucedida!\n\n");
+					
+					qntdNotas--;
+				}
+				
+				break;
+			}	
+		}	
+	
+		break;
+		
+		case 2:
+			printf("ID invalido\n\n");
+		break;
+	}
+	
+	fclose(listaNotas);
+	
+	system("pause");
+	
+	menuNotas();	
 }
