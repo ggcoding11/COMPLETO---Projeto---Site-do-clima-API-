@@ -9,13 +9,28 @@ int main(){
 	printf("Quantidade de elementos: \n");
 	scanf("%d", &qntdElementos);
 	
-	int i = 0;
+	int tam = 0;
 	
-	while (qntdElementos > (i*i)){
-		i++;
+	while (qntdElementos > (tam*tam)){
+		tam++;
 	}
 	
-	printf("%d x %d", i, i);
+	int i = 0;
+	int l, c;
+	
+	int matriz[tam][tam];
+	
+	
+	for (l = 0; (l < tam && i < qntdElementos); l++){
+		for (c = 0; (c < tam && i < qntdElementos); c++, i++){
+			printf("Digite um numero: ");
+			scanf("%d", &matriz[l][c]);
+		}
+	}
+
+	
+	
+	
 	
 	
 
