@@ -15,7 +15,7 @@ void preencherMatriz(int matriz[][50], int N){
 	while (cont < (N * N)){
 		
 		//Esquerda para a direita
-		for (int i = Cesquerda; i < Cdireita; i++){
+		for (int i = Cesquerda; i <= Cdireita; i++){
 			printf("Digite um numero: ");
 			scanf("%d", &num);
 			
@@ -23,10 +23,10 @@ void preencherMatriz(int matriz[][50], int N){
 			cont++;
 		}
 		
-		
+		Ltopo++;
 		
 		//Cima pra baixo
-		for (int i = Ltopo; i < Lbaixo; i++){
+		for (int i = Ltopo; i <= Lbaixo; i++){
 			printf("Digite um numero: ");
 			scanf("%d", &num);
 			
@@ -34,11 +34,11 @@ void preencherMatriz(int matriz[][50], int N){
 			cont++;
 		}
 		
-		
+		Cdireita--;
 		
 		//Direita para a esquerda
 		
-		for (int i = Cdireita; i > Cesquerda; i--){
+		for (int i = Cdireita; i >= Cesquerda; i--){
 			printf("Digite um numero: ");
 			scanf("%d", &num);
 			
@@ -46,11 +46,11 @@ void preencherMatriz(int matriz[][50], int N){
 			cont++;
 		}
 		
-		
+		Lbaixo--;
 		
 		//Baixo para cima
 		
-		for (int i = Lbaixo; i > Ltopo; i--){
+		for (int i = Lbaixo; i >= Ltopo; i--){
 			printf("Digite um numero: ");
 			scanf("%d", &num);
 			
@@ -58,23 +58,7 @@ void preencherMatriz(int matriz[][50], int N){
 			cont++;	
 		}
 		
-		Ltopo++;
-		
-		Cdireita--;
-		
-		Lbaixo--;
-		
 		Cesquerda++;
-		
-		
-		//Isso se tiver alguém no meio, claro...
-		if (Ltopo == Lbaixo && Cesquerda == Cdireita) {
-	            printf("Digite um numero: ");
-	            scanf("%d", &num);
-	            matriz[Ltopo][Cesquerda] = num;
-	            
-	            cont++;
-	        }
 	}
 }
 
@@ -94,8 +78,114 @@ void mostrarMatriz(int matriz[][50], int ordem){
 	}	
 }
 
-void ordenarMatriz(){
-	//Em progresso
+void trocar(int *n1, int *n2){
+	int temp = *n1;
+	*n1 = *n2;
+	*n2 = temp;
+}
+
+void percorrerMatriz(int matriz[][50], int l, int c, int N){
+	int Ltopo = 0;
+	int Lbaixo = N-1;
+	int Cesquerda = 0;
+	int Cdireita = N-1;
+	
+	int cont = 0;
+	
+	while (cont < (N*N)){
+		for (int i = Cesquerda; i <= Cdireita; i++){
+			if (matriz[l][c] > matriz[Ltopo][i]){
+				trocar(&matriz[l][c], &matriz[Ltopo][i]);
+			}
+			
+			cont++;
+		}
+		
+		Ltopo++;
+		
+		//Cima pra baixo
+		for (int i = Ltopo; i <= Lbaixo; i++){
+			if (matriz[l][c] > matriz[i][Cdireita]){
+				trocar(&matriz[l][c], &matriz[i][Cdireita]);
+			}
+			
+			cont++;
+		}
+		
+		Cdireita--;
+		
+		//Direita para a esquerda
+		
+		for (int i = Cdireita; i >= Cesquerda; i--){
+			if (matriz[l][c] > matriz[Lbaixo][i]){
+				trocar(&matriz[l][c], &matriz[Lbaixo][i]);
+			}
+			
+			cont++;
+		}
+		
+		Lbaixo--;
+		
+		//Baixo para cima
+		
+		for (int i = Lbaixo; i >= Ltopo; i--){
+			if (matriz[l][c] > matriz[i][Cesquerda]){
+				trocar(&matriz[l][c], &matriz[i][Cesquerda]);
+			}
+			
+			cont++;	
+		}
+		
+		Cesquerda++;
+	}
+}
+
+void ordenarMatriz(int matriz[][50], int N){
+	int Ltopo = 0;
+	int Lbaixo = N-1;
+	int Cesquerda = 0;
+	int Cdireita = N-1;
+	
+	int cont = 0;
+	
+	while (cont < (N * N)){
+		for (int i = Cesquerda; i <= Cdireita; i++){
+			percorrerMatriz(matriz, Ltopo, i, N);
+			
+			cont++;
+		}
+		
+		Ltopo++;
+		
+		//Cima pra baixo
+		for (int i = Ltopo; i <= Lbaixo; i++){
+			percorrerMatriz(matriz, i, Cdireita, N);
+			
+			cont++;
+		}
+		
+		Cdireita--;
+		
+		//Direita para a esquerda
+		
+		for (int i = Cdireita; i >= Cesquerda; i--){
+			percorrerMatriz(matriz, Lbaixo, i, N);
+			
+			cont++;
+		}
+		
+		Lbaixo--;
+		
+		//Baixo para cima
+		
+		for (int i = Lbaixo; i >= Ltopo; i--){
+			percorrerMatriz(matriz, i, Cesquerda, N);
+			
+			cont++;	
+		}
+		
+		Cesquerda++;
+	}
 }
 
 int main(){
@@ -111,6 +201,8 @@ int main(){
 	system("cls");
 	
 	preencherMatriz(matriz, ordem);
+	
+	ordenarMatriz(matriz, ordem);
 	
 	printf("\n");
 	
