@@ -67,14 +67,14 @@ void preencherMatriz(int matriz[][50], int N){
 		Cesquerda++;
 		
 		
-		//Isso se tiver alguém no meio, claro...
+		//Isso se tiver alguÃ©m no meio, claro...
 		if (Ltopo == Lbaixo && Cesquerda == Cdireita) {
-            printf("Digite um numero: ");
-            scanf("%d", &num);
-            matriz[Ltopo][Cesquerda] = num;
-            
-            cont++;
-        }
+	            printf("Digite um numero: ");
+	            scanf("%d", &num);
+	            matriz[Ltopo][Cesquerda] = num;
+	            
+	            cont++;
+	        }
 	}
 }
 
