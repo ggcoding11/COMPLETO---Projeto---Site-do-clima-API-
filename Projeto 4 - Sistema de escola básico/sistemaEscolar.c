@@ -17,6 +17,7 @@ void listarAluno();
 void cadastrarNota();
 void alterarNota();
 void removerNota();
+void listarNota();
 
 int verificarID(int id);
 int verificarNota(int id, char materia[]);
@@ -463,6 +464,8 @@ void listarAluno(){
 							printf("Nome: %s\n", aluno.nome);
 							printf("Data de nascimento: %d/%d/%d\n", aluno.diaNasc, aluno.mesNasc, aluno.anoNasc);
 							printf("Idade: %d\n\n", aluno.idade);
+							
+							break;
 						}
 					}
 				}
@@ -546,6 +549,10 @@ void menuNotas(){
 		
 		case 3:
 			removerNota();
+		break;
+		
+		case 4:
+			listarNota();
 		break;
 		
 		default:
@@ -967,4 +974,59 @@ void removerNota(){
 	system("pause");
 	
 	menuNotas();	
+}
+
+void listarNota(){
+	system("cls");
+	
+	printf("LISTAGEM DO BOLETIM\n\n");
+	
+	FILE *listaAlunos = fopen("Alunos.txt", "r");
+		
+	if (!listaAlunos){
+		printf("Erro na abertura do arquivo!\n");
+		system("pause");
+		
+		menuNotas();
+		
+		return;
+	}
+	
+	int idProcurado;
+	
+	printf("Qual o ID do estudante?: ");
+	scanf("%d", &idProcurado);
+	
+	switch(verificarID(idProcurado)){
+		case 0:
+			printf("ID nao cadastrado\n\n");
+		break;
+		
+		case 1:{
+			fflush(stdin);
+			
+			Aluno aluno;
+			
+			while (fscanf(listaAlunos, "%d|%60[^|]|%*d/%*d/%*d|%*d", &aluno.id, aluno.nome) == 2) {
+				if (idProcurado == aluno.id) {
+				    break;
+				}
+			}
+			
+			printf("Boletim escolar: \n");
+			printf("ID: %d\n", aluno.id);
+			printf("Aluno: %s\n\n", aluno.nome);
+			
+			//Continuar com a parte da leitura das notas
+		}
+		
+		break;
+		
+		case 2:
+			printf("ID invalido\n\n");
+		break;
+	}
+	
+	fclose(listaAlunos);
+	
 }
