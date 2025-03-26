@@ -982,8 +982,9 @@ void listarNota(){
 	printf("LISTAGEM DO BOLETIM\n\n");
 	
 	FILE *listaAlunos = fopen("Alunos.txt", "r");
-		
-	if (!listaAlunos){
+	FILE *listaNotas = fopen("Notas.txt", "r");
+			
+	if ((!listaAlunos) || (!listaNotas)){
 		printf("Erro na abertura do arquivo!\n");
 		system("pause");
 		
@@ -991,7 +992,7 @@ void listarNota(){
 		
 		return;
 	}
-	
+		
 	int idProcurado;
 	
 	printf("Qual o ID do estudante?: ");
@@ -1013,11 +1014,34 @@ void listarNota(){
 				}
 			}
 			
-			printf("Boletim escolar: \n");
+			printf("\nBoletim escolar: \n");
 			printf("ID: %d\n", aluno.id);
 			printf("Aluno: %s\n\n", aluno.nome);
 			
-			//Continuar com a parte da leitura das notas
+			printf("MATERIA           | NOTA 1 | NOTA 2 | MEDIA FINAL | RESULTADO\n");
+			printf("-------------------------------------------------------------\n");
+			
+			while(fscanf(listaNotas, "%*d|%20[^|]|%f|%f|%f", aluno.nota.materia, &aluno.nota.n1, &aluno.nota.n2, &aluno.nota.media) == 4){
+				char resultado[] = "Aprovado";
+				
+				if (aluno.nota.media < 6){
+					strcpy(resultado, "Reprovado");
+				}
+				
+				printf("%s", aluno.nota.materia);
+				
+				int numeroEspacos = 18 - strlen(aluno.nota.materia);
+				
+				int i;
+				
+				for (i = 0; i < numeroEspacos; i++){
+					printf(" ");
+				}	
+				
+				printf("| %.2f   | %.2f   |     %.2f    | %s\n", aluno.nota.n1, aluno.nota.n2, aluno.nota.media, resultado);
+			}
+			
+			printf("\n");	
 		}
 		
 		break;
@@ -1028,5 +1052,9 @@ void listarNota(){
 	}
 	
 	fclose(listaAlunos);
+	fclose(listaNotas);
 	
+	system("pause");
+	
+	menuNotas();
 }
