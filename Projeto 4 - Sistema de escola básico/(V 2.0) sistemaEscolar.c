@@ -19,6 +19,7 @@ void cadastrarNota();
 void alterarNota();
 void removerNota();
 void listarNota();
+void analisarDesempenho();
 
 int verificarID(int id);
 int verificarNota(int id, char materia[]);
@@ -590,6 +591,7 @@ void menuNotas(){
 	printf("2 - Alteracao das notas do estudante\n");
 	printf("3 - Remocao das notas\n");
 	printf("4 - Listagem do boletim do estudante\n");
+	printf("5 - Analise de desempenho geral\n");
 	printf("0 - Voltar para o menu principal\n\n");
 	
 	printf("Opcao: ");
@@ -614,6 +616,10 @@ void menuNotas(){
 		
 		case 4:
 			listarNota();
+		break;
+		
+		case 5:
+			analisarDesempenho();
 		break;
 		
 		default:
@@ -1120,4 +1126,8 @@ void listarNota(){
 	system("pause");
 	
 	menuNotas();
+}
+
+void analisarDesempenho(){
+	
 }
