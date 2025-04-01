@@ -1129,5 +1129,33 @@ void listarNota(){
 }
 
 void analisarDesempenho(){
+	system("cls");
 	
+	printf("ANALISE DE DESEMPENHO\n\n");
+	
+	printf("1 - Analise por materia\n");
+	printf("2 - Analise geral\n\n");
+	
+	int opcao;
+		
+	printf("Opcao: ");
+	scanf("%d", &opcao);
+	
+	switch(opcao){
+		case 1:
+			
+		break;
+		
+		case 2:
+			
+		break;
+		
+		default:
+			printf("Opcao invalida!\n\n");
+		break;
+	}
+	
+	system("pause");
+	
+	menuNotas();
 }
