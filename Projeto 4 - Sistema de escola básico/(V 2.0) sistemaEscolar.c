@@ -551,6 +551,8 @@ void pesquisarAluno(){
 
 	printf("Qual o nome do estudante? (Ex: Gustavo): ");
 	scanf("%60[^\n]", nomeProcurado);
+	
+	printf("\n");
 
 	int encontrou = 0;
 
@@ -1133,6 +1135,17 @@ void analisarDesempenho(){
 	
 	printf("ANALISE DE DESEMPENHO\n\n");
 	
+	FILE *listaNotas = fopen("Notas.txt", "r");
+	
+	if (!listaNotas){
+		printf("Erro na abertura do arquivo!\n");
+		system("pause");
+		
+		menuNotas();
+		
+		return;
+	}
+	
 	printf("1 - Analise por materia\n");
 	printf("2 - Analise geral\n\n");
 	
@@ -1141,13 +1154,193 @@ void analisarDesempenho(){
 	printf("Opcao: ");
 	scanf("%d", &opcao);
 	
+	Aluno aluno;
+	
 	switch(opcao){
 		case 1:
+			fflush(stdin);
 			
+			system("cls");
+			
+			char materiaLida[21];
+			
+			printf("Qual a materia?: \n\n");
+	
+			printf("1 - Historia\n");
+			printf("2 - Filosofia\n");
+			printf("3 - Sociologia\n");
+			printf("4 - Geografia\n");
+			printf("5 - Fisica\n");
+			printf("6 - Matematica\n");
+			printf("7 - Quimica\n");
+			printf("8 - Biologia\n\n");
+			
+			int opcaoMat;
+			
+			do {
+				printf("Opcao: ");
+				scanf("%d", &opcaoMat);
+				
+				switch(opcaoMat){
+					case 1:
+						strcpy(materiaLida, "Historia");
+					break;
+					
+					case 2:	
+						strcpy(materiaLida, "Filosofia");
+					break;
+					
+					case 3:
+						strcpy(materiaLida, "Sociologia");
+					break;
+					
+					case 4:
+						strcpy(materiaLida, "Geografia");
+					break;
+					
+					case 5:
+						strcpy(materiaLida, "Fisica");
+					break;
+					
+					case 6:
+						strcpy(materiaLida, "Matematica");
+					break;
+					
+					case 7:
+						strcpy(materiaLida, "Quimica");
+					break;
+					
+					case 8:
+						strcpy(materiaLida, "Biologia");
+					break;
+					
+					default:
+						printf("Opcao invalida!\n\n");
+					break;
+				}	
+			} while (opcaoMat < 1 || opcaoMat > 8);
+			
+			float maiorMedia = 0;
+			float menorMedia = 10;
+			float mediaGeral = 0;
+			int numAlunosMateria = 0;
+			int numAprovacoes = 0;
+			int numReprovacoes = 0;
+			
+			int encontrou = 0;
+			
+			while (fscanf(listaNotas, "%*d|%20[^|]|%*f|%*f|%f", aluno.nota.materia, &aluno.nota.media) == 2){
+				if (!strcmp(aluno.nota.materia, materiaLida)){
+					if (!encontrou){
+						encontrou = 1;
+					}
+					
+					numAlunosMateria++;
+						
+					if (aluno.nota.media > maiorMedia){
+						maiorMedia = aluno.nota.media;
+					}
+					
+					if (aluno.nota.media < menorMedia){
+						menorMedia = aluno.nota.media;
+					}
+					
+					mediaGeral += aluno.nota.media;
+					
+					if (aluno.nota.media >= 6){
+						numAprovacoes++;
+					} else {
+						numReprovacoes++;
+					}
+				}
+			}
+			
+			if (encontrou){
+				system("cls");
+				
+				printf("Materia: %s\n\n", materiaLida);
+				
+				printf("Maior media individual: %.2f\n", maiorMedia);
+				printf("Menor media individual: %.2f\n", menorMedia);
+				
+				mediaGeral /= numAlunosMateria;
+				
+				printf("Media geral da materia: %.2f\n", mediaGeral);
+				printf("Numero de aprovacoes: %d\n", numAprovacoes);
+				printf("Numero de reprovacoes: %d\n\n", numReprovacoes);
+			} else {
+				printf("Notas nao cadastradas para essa materia!\n\n");
+			}
 		break;
 		
 		case 2:
+			fflush(stdin);
 			
+			system("cls");
+			
+			int numAprovacoesTotal = 0;
+			int numReprovacoesTotal = 0;
+			
+			float mediasGerais[8];
+			int numAlunosMaterias[8];
+			
+			int i;
+			
+			for (i = 0; i < 8; i++){
+				mediasGerais[i] = 0;
+				numAlunosMaterias[i] = 0;
+			}
+			
+			while (fscanf(listaNotas, "%*d|%20[^|]|%*f|%*f|%f", aluno.nota.materia, &aluno.nota.media) == 2){
+				if (aluno.nota.media >= 6){
+					numAprovacoesTotal++;
+				} else{
+					numReprovacoesTotal++;
+				}
+				
+				if (!strcmp(aluno.nota.materia, "Historia")){
+					mediasGerais[0] += aluno.nota.media;
+					numAlunosMaterias[0]++;
+				} else if (!strcmp(aluno.nota.materia, "Filosofia")){
+					mediasGerais[1] += aluno.nota.media;
+					numAlunosMaterias[1]++;
+				} else if (!strcmp(aluno.nota.materia, "Sociologia")){
+					mediasGerais[2] += aluno.nota.media;
+					numAlunosMaterias[2]++;
+				} else if (!strcmp(aluno.nota.materia, "Geografia")){
+					mediasGerais[3] += aluno.nota.media;
+					numAlunosMaterias[3]++;
+				} else if (!strcmp(aluno.nota.materia, "Fisica")){
+					mediasGerais[4] += aluno.nota.media;
+					numAlunosMaterias[4]++;
+				} else if (!strcmp(aluno.nota.materia, "Matematica")){
+					mediasGerais[5] += aluno.nota.media;
+					numAlunosMaterias[5]++;
+				} else if (!strcmp(aluno.nota.materia, "Quimica")){
+					mediasGerais[6] += aluno.nota.media;
+					numAlunosMaterias[6]++;
+				} else {
+					mediasGerais[7] += aluno.nota.media;
+					numAlunosMaterias[7]++;
+				} 		
+			}
+			
+			for (i = 0; i < 8; i++){
+				mediasGerais[i] /= numAlunosMaterias[i];
+			}
+			
+			float menorMediaGeral = 10;
+			float maiorMediaGeral = 0;
+			
+			for (i = 0; i < 8; i++){
+				if (mediasGerais[i] < menorMedia){
+					menorMedia = mediasGerais[i];
+				}
+				
+				if (mediasGerais[i] > maiorMedia){
+					maiorMedia = mediasGerais[i];
+				}
+			}
 		break;
 		
 		default:
