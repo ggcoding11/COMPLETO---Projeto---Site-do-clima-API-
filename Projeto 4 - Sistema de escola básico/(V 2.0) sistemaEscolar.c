@@ -1291,6 +1291,8 @@ void analisarDesempenho(){
 				numAlunosMaterias[i] = 0;
 			}
 			
+			//ERROS: o numero de aprovações não esta certo, e arrume tambem a menorMedia
+			
 			while (fscanf(listaNotas, "%*d|%20[^|]|%*f|%*f|%f", aluno.nota.materia, &aluno.nota.media) == 2){
 				if (aluno.nota.media >= 6){
 					numAprovacoesTotal++;
@@ -1332,15 +1334,96 @@ void analisarDesempenho(){
 			float menorMediaGeral = 10;
 			float maiorMediaGeral = 0;
 			
+			int indiceMaior, indiceMenor;
+			
 			for (i = 0; i < 8; i++){
-				if (mediasGerais[i] < menorMedia){
-					menorMedia = mediasGerais[i];
+				if (mediasGerais[i] < menorMediaGeral){
+					menorMediaGeral = mediasGerais[i];
+					indiceMenor = i;
 				}
 				
-				if (mediasGerais[i] > maiorMedia){
-					maiorMedia = mediasGerais[i];
+				if (mediasGerais[i] > maiorMediaGeral){
+					maiorMediaGeral = mediasGerais[i];
+					indiceMaior = i;
 				}
 			}
+			
+			printf("Analise de desempenho geral\n\n");
+			
+			printf("Materia com melhor desemepenho: ");
+			
+			switch(indiceMaior){
+				case 0:
+					printf("Historia\n");
+				break;
+				
+				case 1:
+					printf("Filosofia\n");
+				break;
+				
+				case 2:
+					printf("Sociologia\n");
+				break;
+				
+				case 3:
+					printf("Geografia\n");
+				break;
+				
+				case 4:
+					printf("Fisica\n");
+				break;
+				
+				case 5:
+					printf("Matematica\n");
+				break;
+				
+				case 6:
+					printf("Quimica\n");
+				break;
+				
+				case 7:
+					printf("Biologia\n");
+				break;
+			}
+			
+			printf("Materia com pior desemepenho: ");
+			
+			switch(indiceMenor){
+				case 0:
+					printf("Historia\n");
+				break;
+				
+				case 1:
+					printf("Filosofia\n");
+				break;
+				
+				case 2:
+					printf("Sociologia\n");
+				break;
+				
+				case 3:
+					printf("Geografia\n");
+				break;
+				
+				case 4:
+					printf("Fisica\n");
+				break;
+				
+				case 5:
+					printf("Matematica\n");
+				break;
+				
+				case 6:
+					printf("Quimica\n");
+				break;
+				
+				case 7:
+					printf("Biologia\n");
+				break;
+			}
+			
+			printf("Numero total de aprovados: %d\n", numAprovacoesTotal);
+			printf("Numero total de reprovados: %d\n", numReprovacoesTotal);
 		break;
 		
 		default:
