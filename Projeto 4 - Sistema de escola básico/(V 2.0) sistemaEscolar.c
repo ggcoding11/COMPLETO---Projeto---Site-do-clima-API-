@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
@@ -1220,8 +1221,12 @@ void analisarDesempenho(){
 				}	
 			} while (opcaoMat < 1 || opcaoMat > 8);
 			
-			float maiorMedia = 0;
-			float menorMedia = 10;
+			fscanf(listaNotas, "%*d|%*20[^|]|%*f|%*f|%f", &aluno.nota.media) == 1;
+			
+			rewind(listaNotas);
+					
+			float maiorMedia = aluno.nota.media;
+			float menorMedia = aluno.nota.media;
 			float mediaGeral = 0;
 			int numAlunosMateria = 0;
 			int numAprovacoes = 0;
@@ -1278,152 +1283,50 @@ void analisarDesempenho(){
 			
 			system("cls");
 			
-			int numAprovacoesTotal = 0;
+			int *idAlunosReprovados = NULL;
+			
 			int numReprovacoesTotal = 0;
+			int numAprovacoesTotal = 0;
 			
-			float mediasGerais[8];
-			int numAlunosMaterias[8];
-			
-			int i;
-			
-			for (i = 0; i < 8; i++){
-				mediasGerais[i] = 0;
-				numAlunosMaterias[i] = 0;
+			while (fscanf(listaNotas, "%d|%*20[^|]|%*f|%*f|%f", &aluno.id, &aluno.nota.media) == 2){
+				if (aluno.nota.media < 6){	
+					int j = 0;
+					
+					int idRepetido = 0;
+					
+					if (idAlunosReprovados != NULL){
+						do {
+							if (idAlunosReprovados[j] == aluno.id){
+								idRepetido = 1;
+							}
+							
+							j++;
+						} while ((j < numReprovacoesTotal) && (idRepetido == 0));	
+					}
+					
+					if (!idRepetido){
+						idAlunosReprovados = realloc(idAlunosReprovados, (numReprovacoesTotal + 1) * sizeof(int));
+						
+						if (idAlunosReprovados == NULL){
+							printf("Erro na alocacao de memoria!\n\n");
+					
+							system("pause");
+		
+							menuNotas();
+	
+							return;
+						} else {
+							idAlunosReprovados[numReprovacoesTotal] = aluno.id;
+						
+							numReprovacoesTotal++;
+						}
+					}
+				} 
 			}
 			
-			//ERROS: o numero de aprovações não esta certo, e arrume tambem a menorMedia
+			printf("Numero de estudantes reprovados: %d\n", numReprovacoesTotal);
 			
-			while (fscanf(listaNotas, "%*d|%20[^|]|%*f|%*f|%f", aluno.nota.materia, &aluno.nota.media) == 2){
-				if (aluno.nota.media >= 6){
-					numAprovacoesTotal++;
-				} else{
-					numReprovacoesTotal++;
-				}
-				
-				if (!strcmp(aluno.nota.materia, "Historia")){
-					mediasGerais[0] += aluno.nota.media;
-					numAlunosMaterias[0]++;
-				} else if (!strcmp(aluno.nota.materia, "Filosofia")){
-					mediasGerais[1] += aluno.nota.media;
-					numAlunosMaterias[1]++;
-				} else if (!strcmp(aluno.nota.materia, "Sociologia")){
-					mediasGerais[2] += aluno.nota.media;
-					numAlunosMaterias[2]++;
-				} else if (!strcmp(aluno.nota.materia, "Geografia")){
-					mediasGerais[3] += aluno.nota.media;
-					numAlunosMaterias[3]++;
-				} else if (!strcmp(aluno.nota.materia, "Fisica")){
-					mediasGerais[4] += aluno.nota.media;
-					numAlunosMaterias[4]++;
-				} else if (!strcmp(aluno.nota.materia, "Matematica")){
-					mediasGerais[5] += aluno.nota.media;
-					numAlunosMaterias[5]++;
-				} else if (!strcmp(aluno.nota.materia, "Quimica")){
-					mediasGerais[6] += aluno.nota.media;
-					numAlunosMaterias[6]++;
-				} else {
-					mediasGerais[7] += aluno.nota.media;
-					numAlunosMaterias[7]++;
-				} 		
-			}
-			
-			for (i = 0; i < 8; i++){
-				mediasGerais[i] /= numAlunosMaterias[i];
-			}
-			
-			float menorMediaGeral = 10;
-			float maiorMediaGeral = 0;
-			
-			int indiceMaior, indiceMenor;
-			
-			for (i = 0; i < 8; i++){
-				if (mediasGerais[i] < menorMediaGeral){
-					menorMediaGeral = mediasGerais[i];
-					indiceMenor = i;
-				}
-				
-				if (mediasGerais[i] > maiorMediaGeral){
-					maiorMediaGeral = mediasGerais[i];
-					indiceMaior = i;
-				}
-			}
-			
-			printf("Analise de desempenho geral\n\n");
-			
-			printf("Materia com melhor desemepenho: ");
-			
-			switch(indiceMaior){
-				case 0:
-					printf("Historia\n");
-				break;
-				
-				case 1:
-					printf("Filosofia\n");
-				break;
-				
-				case 2:
-					printf("Sociologia\n");
-				break;
-				
-				case 3:
-					printf("Geografia\n");
-				break;
-				
-				case 4:
-					printf("Fisica\n");
-				break;
-				
-				case 5:
-					printf("Matematica\n");
-				break;
-				
-				case 6:
-					printf("Quimica\n");
-				break;
-				
-				case 7:
-					printf("Biologia\n");
-				break;
-			}
-			
-			printf("Materia com pior desemepenho: ");
-			
-			switch(indiceMenor){
-				case 0:
-					printf("Historia\n");
-				break;
-				
-				case 1:
-					printf("Filosofia\n");
-				break;
-				
-				case 2:
-					printf("Sociologia\n");
-				break;
-				
-				case 3:
-					printf("Geografia\n");
-				break;
-				
-				case 4:
-					printf("Fisica\n");
-				break;
-				
-				case 5:
-					printf("Matematica\n");
-				break;
-				
-				case 6:
-					printf("Quimica\n");
-				break;
-				
-				case 7:
-					printf("Biologia\n");
-				break;
-			}
-			
-			printf("Numero total de aprovados: %d\n", numAprovacoesTotal);
-			printf("Numero total de reprovados: %d\n", numReprovacoesTotal);
+			free(idAlunosReprovados);
 		break;
 		
 		default:
