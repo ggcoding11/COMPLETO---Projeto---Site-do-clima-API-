@@ -16,6 +16,7 @@ void removerAluno();
 void listarAluno();
 void pesquisarAluno();
 
+void selecionarMateria(char materia[]);
 void cadastrarNota();
 void alterarNota();
 void removerNota();
@@ -631,6 +632,64 @@ void menuNotas(){
 	}
 }
 
+void selecionarMateria(char materia[]){
+	printf("Qual a materia?: \n\n");
+	
+	printf("1 - Historia\n");
+	printf("2 - Filosofia\n");
+	printf("3 - Sociologia\n");
+	printf("4 - Geografia\n");
+	printf("5 - Fisica\n");
+	printf("6 - Matematica\n");
+	printf("7 - Quimica\n");
+	printf("8 - Biologia\n\n");
+	
+	int opcao;
+	
+	do {
+		printf("Opcao: ");
+		scanf("%d", &opcao);
+		
+		switch(opcao){
+			case 1:
+				strcpy(materia, "Historia");
+			break;
+			
+			case 2:
+				strcpy(materia, "Filosofia");
+			break;
+			
+			case 3:
+				strcpy(materia, "Sociologia");
+			break;
+			
+			case 4:
+				strcpy(materia, "Geografia");
+			break;
+			
+			case 5:
+				strcpy(materia, "Fisica");
+			break;
+			
+			case 6:
+				strcpy(materia, "Matematica");
+			break;
+			
+			case 7:
+				strcpy(materia, "Quimica");
+			break;
+			
+			case 8:
+				strcpy(materia, "Biologia");
+			break;
+			
+			default:
+				printf("Opcao invalida!\n\n");
+			break;
+		}	
+	} while (opcao < 1 || opcao > 8);
+}
+
 void cadastrarNota(){
 	system("cls");
 	
@@ -658,61 +717,7 @@ void cadastrarNota(){
 		break;
 		
 		case 1:{
-			printf("Qual a materia?: \n\n");
-	
-			printf("1 - Historia\n");
-			printf("2 - Filosofia\n");
-			printf("3 - Sociologia\n");
-			printf("4 - Geografia\n");
-			printf("5 - Fisica\n");
-			printf("6 - Matematica\n");
-			printf("7 - Quimica\n");
-			printf("8 - Biologia\n\n");
-			
-			int opcao;
-			
-			do {
-				printf("Opcao: ");
-				scanf("%d", &opcao);
-				
-				switch(opcao){
-					case 1:
-						strcpy(aluno.nota.materia, "Historia");
-					break;
-					
-					case 2:
-						strcpy(aluno.nota.materia, "Filosofia");
-					break;
-					
-					case 3:
-						strcpy(aluno.nota.materia, "Sociologia");
-					break;
-					
-					case 4:
-						strcpy(aluno.nota.materia, "Geografia");
-					break;
-					
-					case 5:
-						strcpy(aluno.nota.materia, "Fisica");
-					break;
-					
-					case 6:
-						strcpy(aluno.nota.materia, "Matematica");
-					break;
-					
-					case 7:
-						strcpy(aluno.nota.materia, "Quimica");
-					break;
-					
-					case 8:
-						strcpy(aluno.nota.materia, "Biologia");
-					break;
-					
-					default:
-						printf("Opcao invalida!\n\n");
-					break;
-				}	
-			} while (opcao < 1 || opcao > 8);
+			selecionarMateria(aluno.nota.materia);
 			
 			switch(verificarNota(aluno.id, aluno.nota.materia)){
 				case 0:
@@ -787,61 +792,7 @@ void alterarNota(){
 		case 1:{
 			fflush(stdin);
 			
-			printf("Qual a materia?: \n\n");
-	
-			printf("1 - Historia\n");
-			printf("2 - Filosofia\n");
-			printf("3 - Sociologia\n");
-			printf("4 - Geografia\n");
-			printf("5 - Fisica\n");
-			printf("6 - Matematica\n");
-			printf("7 - Quimica\n");
-			printf("8 - Biologia\n\n");
-			
-			int opcao;
-			
-			do {
-				printf("Opcao: ");
-				scanf("%d", &opcao);
-				
-				switch(opcao){
-					case 1:
-						strcpy(aluno.nota.materia, "Historia");
-					break;
-					
-					case 2:	
-						strcpy(aluno.nota.materia, "Filosofia");
-					break;
-					
-					case 3:
-						strcpy(aluno.nota.materia, "Sociologia");
-					break;
-					
-					case 4:
-						strcpy(aluno.nota.materia, "Geografia");
-					break;
-					
-					case 5:
-						strcpy(aluno.nota.materia, "Fisica");
-					break;
-					
-					case 6:
-						strcpy(aluno.nota.materia, "Matematica");
-					break;
-					
-					case 7:
-						strcpy(aluno.nota.materia, "Quimica");
-					break;
-					
-					case 8:
-						strcpy(aluno.nota.materia, "Biologia");
-					break;
-					
-					default:
-						printf("Opcao invalida!\n\n");
-					break;
-				}	
-			} while (opcao < 1 || opcao > 8);
+			selecionarMateria(aluno.nota.materia);
 			
 			switch(verificarNota(aluno.id, aluno.nota.materia)){
 				case 0:
@@ -935,61 +886,7 @@ void removerNota(){
 		case 1:{
 			fflush(stdin);
 			
-			printf("Qual a materia?: \n\n");
-	
-			printf("1 - Historia\n");
-			printf("2 - Filosofia\n");
-			printf("3 - Sociologia\n");
-			printf("4 - Geografia\n");
-			printf("5 - Fisica\n");
-			printf("6 - Matematica\n");
-			printf("7 - Quimica\n");
-			printf("8 - Biologia\n\n");
-			
-			int opcao;
-			
-			do {
-				printf("Opcao: ");
-				scanf("%d", &opcao);
-				
-				switch(opcao){
-					case 1:
-						strcpy(materiaRemovida, "Historia");
-					break;
-					
-					case 2:	
-						strcpy(materiaRemovida, "Filosofia");
-					break;
-					
-					case 3:
-						strcpy(materiaRemovida, "Sociologia");
-					break;
-					
-					case 4:
-						strcpy(materiaRemovida, "Geografia");
-					break;
-					
-					case 5:
-						strcpy(materiaRemovida, "Fisica");
-					break;
-					
-					case 6:
-						strcpy(materiaRemovida, "Matematica");
-					break;
-					
-					case 7:
-						strcpy(materiaRemovida, "Quimica");
-					break;
-					
-					case 8:
-						strcpy(materiaRemovida, "Biologia");
-					break;
-					
-					default:
-						printf("Opcao invalida!\n\n");
-					break;
-				}	
-			} while (opcao < 1 || opcao > 8);
+			selecionarMateria(materiaRemovida);
 			
 			switch(verificarNota(idRemovido, materiaRemovida)){
 				case 0:
@@ -1153,99 +1050,49 @@ void analisarDesempenho(){
 	
 	char materiaLida[21];
 	
-	printf("Qual a materia?: \n\n");
-
-	printf("1 - Historia\n");
-	printf("2 - Filosofia\n");
-	printf("3 - Sociologia\n");
-	printf("4 - Geografia\n");
-	printf("5 - Fisica\n");
-	printf("6 - Matematica\n");
-	printf("7 - Quimica\n");
-	printf("8 - Biologia\n\n");
-	
-	int opcaoMat;
-	
-	do {
-		printf("Opcao: ");
-		scanf("%d", &opcaoMat);
-		
-		switch(opcaoMat){
-			case 1:
-				strcpy(materiaLida, "Historia");
-			break;
-			
-			case 2:	
-				strcpy(materiaLida, "Filosofia");
-			break;
-			
-			case 3:
-				strcpy(materiaLida, "Sociologia");
-			break;
-			
-			case 4:
-				strcpy(materiaLida, "Geografia");
-			break;
-			
-			case 5:
-				strcpy(materiaLida, "Fisica");
-			break;
-			
-			case 6:
-				strcpy(materiaLida, "Matematica");
-			break;
-			
-			case 7:
-				strcpy(materiaLida, "Quimica");
-			break;
-			
-			case 8:
-				strcpy(materiaLida, "Biologia");
-			break;
-			
-			default:
-				printf("Opcao invalida!\n\n");
-			break;
-		}	
-	} while (opcaoMat < 1 || opcaoMat > 8);
+	selecionarMateria(materiaLida);
 	
 	int encontrou = 0;
-			
-	float maiorMedia = 0;
-	float menorMedia = 10;
-	float mediaGeral = 0;
-	int numAlunosMateria = 0;
-	int numAprovacoes = 0;
-	int numReprovacoes = 0;
 	
 	while (fscanf(listaNotas, "%*d|%20[^|]|%*f|%*f|%f", aluno.nota.materia, &aluno.nota.media) == 2){
-		if (!strcmp(aluno.nota.materia, materiaLida)){
-			
-			if (!encontrou){
-				encontrou = 1;
-			}
-	
-			numAlunosMateria++;
-				
-			if (aluno.nota.media > maiorMedia){
-				maiorMedia = aluno.nota.media;
-			}
-			
-			if (aluno.nota.media < menorMedia){
-				menorMedia = aluno.nota.media;
-			}
-			
-			mediaGeral += aluno.nota.media;
-			
-			if (aluno.nota.media >= 6){
-				numAprovacoes++;
-			} else {
-				numReprovacoes++;
-			}
-		}
+		if (strcmp(materiaLida, aluno.nota.materia) == 0){
+			encontrou = 1;	
+			break;
+		}		
 	}
 	
+	rewind(listaNotas);
+	
 	if (encontrou){
+		float maiorMedia = aluno.nota.media;
+		float menorMedia = aluno.nota.media;
+		float mediaGeral = 0;
+		int numAlunosMateria = 0;
+		int numAprovacoes = 0;
+		int numReprovacoes = 0;
+		
+		while (fscanf(listaNotas, "%*d|%20[^|]|%*f|%*f|%f", aluno.nota.materia, &aluno.nota.media) == 2){
+			if (strcmp(aluno.nota.materia, materiaLida) == 0){
+				numAlunosMateria++;
+					
+				if (aluno.nota.media > maiorMedia){
+					maiorMedia = aluno.nota.media;
+				}
+				
+				if (aluno.nota.media < menorMedia){
+					menorMedia = aluno.nota.media;
+				}
+				
+				mediaGeral += aluno.nota.media;
+				
+				if (aluno.nota.media >= 6){
+					numAprovacoes++;
+				} else {
+					numReprovacoes++;
+				}
+			}
+		}
+		
 		system("cls");
 		
 		printf("Materia: %s\n\n", materiaLida);
@@ -1257,7 +1104,7 @@ void analisarDesempenho(){
 		
 		printf("Media geral da materia: %.2f\n", mediaGeral);
 		printf("Numero de aprovacoes: %d\n", numAprovacoes);
-		printf("Numero de reprovacoes: %d\n\n", numReprovacoes);
+		printf("Numero de reprovacoes: %d\n\n", numReprovacoes);	
 	} else {
 		printf("Notas nao cadastradas para essa materia!\n\n");
 	}
