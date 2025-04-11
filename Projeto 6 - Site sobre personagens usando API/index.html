@@ -13,17 +13,38 @@
 
 <body>
     <header>
-        <nav class="navbar bg-warning">
+        <nav class="navbar navbar-expand-lg bg-warning">
             <div class="container">
-                <span class="navbar-brand mb-0 h1">Site de Dragon Ball</span>
+                <a class="navbar-brand" href="index.html">
+                    <img src="https://seeklogo.com/images/D/dragon-ball-with-4-stars-logo-F11C43957B-seeklogo.com.png"
+                        alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+                    Site de Dragon Ball
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Personagens</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">História</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" aria-disabled="true">Sobre nós</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>
 
     <section>
         <div class="container mt-4">
-            <div class="row mb-2">
-                <div class="col-12 col-lg-4">
+            <div class="row">
+                <div class="col-12 col-lg-4 mb-2">
                     <div class="card">
                         <h5 class="card-title mx-auto" id="nome"></h5>
 
@@ -31,7 +52,7 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-lg-4">
+                <div class="col-12 col-lg-4 mb-2">
                     <div class="card">
                         <h5 class="card-title mx-auto" id="nome"></h5>
 
@@ -39,33 +60,7 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-lg-4">
-                    <div class="card">
-                        <h5 class="card-title mx-auto" id="nome"></h5>
-
-                        <img src="" alt="img-db" id="foto" class="mx-auto">
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mb-2">
-                <div class="col-12 col-lg-4">
-                    <div class="card">
-                        <h5 class="card-title mx-auto" id="nome"></h5>
-
-                        <img src="" alt="img-db" id="foto" class="mx-auto">
-                    </div>
-                </div>
-
-                <div class="col-12 col-lg-4">
-                    <div class="card">
-                        <h5 class="card-title mx-auto" id="nome"></h5>
-
-                        <img src="" alt="img-db" id="foto" class="mx-auto">
-                    </div>
-                </div>
-                
-                <div class="col-12 col-lg-4">
+                <div class="col-12 col-lg-4 mb-2">
                     <div class="card">
                         <h5 class="card-title mx-auto" id="nome"></h5>
 
@@ -74,8 +69,8 @@
                 </div>
             </div>
 
-            <div class="row mb-2">
-                <div class="col-12 col-lg-4">
+            <div class="row">
+                <div class="col-12 col-lg-4 mb-2">
                     <div class="card">
                         <h5 class="card-title mx-auto" id="nome"></h5>
 
@@ -83,15 +78,41 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-lg-4">
+                <div class="col-12 col-lg-4 mb-2">
                     <div class="card">
                         <h5 class="card-title mx-auto" id="nome"></h5>
 
                         <img src="" alt="img-db" id="foto" class="mx-auto">
                     </div>
                 </div>
-                
-                <div class="col-12 col-lg-4">
+
+                <div class="col-12 col-lg-4 mb-2">
+                    <div class="card">
+                        <h5 class="card-title mx-auto" id="nome"></h5>
+
+                        <img src="" alt="img-db" id="foto" class="mx-auto">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-lg-4 mb-2">
+                    <div class="card">
+                        <h5 class="card-title mx-auto" id="nome"></h5>
+
+                        <img src="" alt="img-db" id="foto" class="mx-auto">
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4 mb-2">
+                    <div class="card">
+                        <h5 class="card-title mx-auto" id="nome"></h5>
+
+                        <img src="" alt="img-db" id="foto" class="mx-auto">
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4 mb-2">
                     <div class="card">
                         <h5 class="card-title mx-auto" id="nome"></h5>
 
@@ -101,6 +122,30 @@
             </div>
         </div>
     </section>
+
+    <footer>
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center">
+                    <nav aria-label="...">
+                        <ul class="pagination">
+                            <li class="page-item disabled">
+                                <span class="page-link">Previous</span>
+                            </li>
+                            <li class="page-item active" aria-current="page">
+                                <span class="page-link">1</span>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

@@ -1,4 +1,22 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    text-decoration: none; 
+    /* O text decoration foi usado para tirar o sublinhado da tag a */
+    list-style: none;
+    /* Para eliminar os pontinhos das listas */
+}
+
 #foto{
     width: 60px;
     height: 130px;
+}
+
+body{
+    background-image: url("https://images2.alphacoders.com/100/thumb-1920-1003880.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
 }
