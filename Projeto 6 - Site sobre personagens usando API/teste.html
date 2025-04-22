@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personagens</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            width: 200px;
+            text-align: center;
+            padding: 10px;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .pagination {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .pagination button {
+            margin: 0 10px;
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+        }
+
+        .pagination button:disabled {
+            background-color: #aaa;
+            cursor: not-allowed;
+        }
+
+        #page-number {
+            font-size: 18px;
+            margin: 0 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Personagens</h1>
+    <div id="cards-container" class="cards-container"></div>
+
+    <div class="pagination">
+        <button id="prev-btn">Anterior</button>
+        <span id="page-number">Página 1</span>
+        <button id="next-btn">Próxima</button>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        let totalPages = 1;
+
+        function loadCharacters(page) {
+            if (page < 1 || page > totalPages) return;
+
+            fetch(`https://rickandmortyapi.com/api/character?page=${page}`)
+                .then(response => response.json())
+                .then(data => {
+                    currentPage = page;
+                    totalPages = data.info.pages;
+
+                    document.getElementById('page-number').textContent = `Página ${currentPage}`;
+                    document.getElementById('prev-btn').disabled = currentPage === 1;
+                    document.getElementById('next-btn').disabled = currentPage === totalPages;
+
+                    const container = document.getElementById('cards-container');
+                    container.innerHTML = '';
+
+                    data.results.forEach(character => {
+                        const card = document.createElement('div');
+                        card.className = 'card';
+                        card.innerHTML = `
+              <img src="${character.image}" alt="${character.name}">
+              <h3>${character.name}</h3>
+              <p>${character.species}</p>
+            `;
+                        container.appendChild(card);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar personagens:', error);
+                });
+        }
+
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            loadCharacters(currentPage - 1);
+        });
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+            loadCharacters(currentPage + 1);
+        });
+
+        // Carrega a primeira página ao iniciar
+        loadCharacters(currentPage);
+    </script>
+
+</body>
+
+</html>

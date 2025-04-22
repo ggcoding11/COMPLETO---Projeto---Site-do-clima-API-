@@ -1,60 +1,60 @@
-fetch("https://dragonball-api.com/api/characters").then(resposta => {
-    return resposta.json()
-})
-    .then(dados => {
-        criarCards(dados)
-    })
-    .catch(erro => {
-        console.error(erro)
-    })
+let currentPage = 1
+let totalPaginas = 1
+let indicePagina = document.getElementById("pagina-atual")
 
-function criarCards(dados) {
-    let container = document.createElement("div")
-    container.className = "container mt-4"
-    document.body.appendChild(container)
-
-    for (let j = 0; j < 3; j++) {
-        let row = document.createElement("div")
-        row.className = "row"
-        container.appendChild(row)
-
-        for (let i = 0; i < 3; i++) {
-            let col = document.createElement("div")
-            col.className = "col-12 col-lg-4 mb-2"
-            row.appendChild(col)
-
-            let card = document.createElement("div")
-            card.className = "card"
-            col.append(card)
-
-            let h5 = document.createElement("h5")
-            h5.className = "card-title mx-auto"
-            h5.id = "nome"
-            card.appendChild(h5)
-
-            let img = document.createElement("img")
-            img.src = ""
-            img.alt = "img-db"
-            img.id = "foto"
-            img.className = "mx-auto"
-
-            card.appendChild(img)
-        }
-
-        inserirConteudo(dados)
+function carregarPersonagens(page){
+    if (page < 1 || page > totalPaginas){
+        return
     }
+
+    fetch(`https://dragonball-api.com/api/characters?page=${page}`)
+        .then(response => response.json())
+        .then(data => {
+            currentPage = page
+            indicePagina.innerText = currentPage
+            totalPaginas = data.meta.totalPages
+
+            let botaoAnterior = document.getElementById("btn-anterior")
+
+            if (currentPage == 1){
+                botaoAnterior.className = "btn btn-secondary"
+            } else {
+                botaoAnterior.className = "btn btn-primary"
+            }
+
+            let botaoProximo = document.getElementById("btn-proximo")
+
+            if (currentPage == totalPaginas){
+                botaoProximo.className = "btn btn-secondary"
+            } else {
+                botaoProximo.className = "btn btn-primary"
+            }
+
+            let container = document.getElementById("container-personagens")
+            container.innerHTML = ""
+
+            data.items.forEach(function(personagem){
+                let card = document.createElement("div")
+                card.className = "card"
+                card.innerHTML = `
+                <h3>${personagem.name}</h3>
+                <img src="${personagem.image}" alt="${personagem.name}">
+                <p>${personagem.race}</p>
+
+                `
+                
+                container.appendChild(card)
+
+            })
+
+            document.getElementById("btn-anterior").addEventListener("click", function(){
+                carregarPersonagens(currentPage - 1)
+            })
+
+            document.getElementById("btn-proximo").addEventListener("click", function(){
+                carregarPersonagens(currentPage + 1)
+            })
+        })
 }
 
-function inserirConteudo(dados) {
-    let selecaoCards = document.querySelectorAll(".card")
-
-    selecaoCards.forEach((card, index) => {
-        let titulo = card.querySelector(".card-title")
-
-        titulo.innerHTML = dados.items[index].name
-
-        let imagem = card.querySelector("#foto")
-
-        imagem.src = dados.items[index].image
-    })
-}
+carregarPersonagens(currentPage)
