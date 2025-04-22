@@ -35,7 +35,7 @@ function carregarPersonagens(page){
 
             data.items.forEach(function(personagem){
                 let card = document.createElement("div")
-                card.className = "card"
+                card.className = "card card-personagem"
                 card.innerHTML = `
                 <h3>${personagem.name}</h3>
                 <img src="${personagem.image}" alt="${personagem.name}">
