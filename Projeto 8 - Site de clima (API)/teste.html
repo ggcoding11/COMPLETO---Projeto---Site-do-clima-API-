@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const chaveAPI = "CHAVE DA API"
+        let cidade = "São Paulo"
+
+        fetch(`https://api.weatherapi.com/v1/current.json?key=${chaveAPI}&q=${cidade}`)
+            .then(response => response.json())
+            .then(dados => {
+                document.write(dados.current.temp_c)
+            })
+    </script>
+    
+</body>
+</html>
