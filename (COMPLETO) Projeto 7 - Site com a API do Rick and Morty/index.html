@@ -36,27 +36,33 @@
 </head>
 
 <body>
-    <nav class="navbar bg-body-tertiary">
+    <nav class="navbar bg-body-tertiary mb-4">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.html" id="nome-site">
                 <img src="https://e7.pngegg.com/pngimages/277/446/png-clipart-rick-and-morty-illustratrion-rick-sanchez-morty-smith-rick-and-morty-season-1-television-show-youtube-rick-and-morty-television-logo-thumbnail.png"
                     alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
-                Rick and Morty
+                The Rick and Morty API - Mr JeeJ
             </a>
         </div>
     </nav>
 
+    <div class="container mb-4">
+        <div class="row d-flex justify-content-center align-items-center g-3" id="linha-personagens">
+            <!-- Conteúdo de personagens -->
+        </div>
+    </div>
+
     <nav class="paginacao">
         <div class="container">
-            <div class="row justify-content-center align-items-center">
+            <div class="row d-flex justify-content-center align-items-center">
                 <div class="col-auto">
-                    <button type="button" class="btn btn-primary">Previous</button>
+                    <button type="button" class="btn btn-primary" id="btn-anterior">Previous</button>
                 </div>
                 <div class="col-auto">
-                    <div class="card p-2">1</div>
+                    <div class="card px-3 py-2" id="pagina-atual"></div>
                 </div>
                 <div class="col-auto">
-                    <button type="button" class="btn btn-primary">Next</button>
+                    <button type="button" class="btn btn-primary" id="btn-proximo">Next</button>
                 </div>
             </div>
         </div>
@@ -65,7 +71,75 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
         crossorigin="anonymous"></script>
-    <script></script>
+    <script>
+        let currentPage = 1
+        let totalPaginas = 1
+        let paginaAtual = document.getElementById("pagina-atual")
+
+        let botaoProximo = document.getElementById("btn-proximo")
+        let botaoAnterior = document.getElementById("btn-anterior")
+
+        function carregarPersonagens(page) {
+            if (page < 1 || page > totalPaginas) {
+                return
+            }
+
+            fetch(`https://rickandmortyapi.com/api/character/?page=${page}`)
+                .then(response => response.json())
+                .then(data => {
+                    currentPage = page
+                    paginaAtual.innerText = currentPage
+                    totalPaginas = data.info.pages
+
+                    if (currentPage == 1) {
+                        botaoAnterior.className = "btn btn-secondary"
+                    } else {
+                        botaoAnterior.className = "btn btn-primary"
+                    }
+
+                    if (currentPage == totalPaginas) {
+                        botaoProximo.className = "btn btn-secondary"
+                    } else {
+                        botaoProximo.className = "btn btn-primary"
+                    }
+
+                    const linhaChars = document.getElementById("linha-personagens")
+                    linhaChars.innerHTML = ""
+
+                    data.results.forEach(function (personagem) {
+                        let coluna = document.createElement("div")
+                        coluna.className = "col-lg-3 col-md-4 col-sm-6 col-12"
+
+                        let classeImagem = "card p-4 text-center"
+
+                        if (personagem.status == "Dead") {
+                            classeImagem += " bg-secondary"
+                        }
+
+                        coluna.innerHTML = `
+                            <div class="${classeImagem}">
+                                <img class="mb-2 rounded-4" src="${personagem.image}" alt="${personagem.name}">
+                                <h6>${personagem.name}</h3>
+                                <span>Estado: ${personagem.status}</span>
+                                <span>Espécie: ${personagem.species}</span>                                
+                            </div>
+                        `
+
+                        linhaChars.appendChild(coluna)
+                    })
+                })
+        }
+
+        botaoProximo.addEventListener("click", () => {
+            carregarPersonagens(currentPage + 1)
+        })
+
+        botaoAnterior.addEventListener("click", () => {
+            carregarPersonagens(currentPage - 1)
+        })
+
+        carregarPersonagens(currentPage)
+    </script>
 </body>
 
 </html>
