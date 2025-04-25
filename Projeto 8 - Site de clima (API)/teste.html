@@ -6,14 +6,18 @@
     <title>Document</title>
 </head>
 <body>
+    <img src="" alt="" id="icone">
+
+
     <script>
-        const chaveAPI = "CHAVE DA API"
+        const chaveAPI = "290fc79807794f89812162023252404"
         let cidade = "São Paulo"
 
         fetch(`https://api.weatherapi.com/v1/current.json?key=${chaveAPI}&q=${cidade}`)
             .then(response => response.json())
             .then(dados => {
-                document.write(dados.current.temp_c)
+                let imagem = document.getElementById("icone")
+                imagem.setAttribute("src", dados.current.condition.icon)
             })
     </script>
     
