@@ -22,7 +22,6 @@
         }
 
         body {
-            background-image: url("img/img-blur.png");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -32,6 +31,7 @@
         #nome-site {
             font-family: "Sansation", sans-serif;
         }
+
     </style>
 </head>
 
@@ -40,7 +40,7 @@
         <div
             class="container d-flex justify-content-center justify-content-lg-between justify-content-md-around justify-content-sm-evenly">
             <a class="navbar-brand" href="index.html" id="nome-site">
-                <img src="/img/icone-kermit.png" alt="Logo" width="30" height="24"
+                <img src="/Projeto 8 - Site de clima (API)/img/icone-kermit.png" alt="Logo" width="30" height="24"
                     class="d-inline-block align-text-top">
                 Weather Kermit</a>
             <div class="d-flex align-items-center">
@@ -60,7 +60,9 @@
         <!-- Informações atuais sobre o clima -->
     
         <div class="row" id="linha-img">
-            <div class="col-12 d-flex justify-content-center"></div>
+            <div class="col-12 d-flex justify-content-center">
+                <img src="" alt="" id="icone-clima">
+            </div>
         </div>
 
         <div class="row" id="linha-local">
@@ -81,7 +83,6 @@
         crossorigin="anonymous"></script>
 
     <script>
-
         let localAtual = "Maringá"
         const chaveAPI = "290fc79807794f89812162023252404"
 
@@ -97,14 +98,29 @@
             fetch(`https://api.weatherapi.com/v1/current.json?key=${chaveAPI}&q=${localAtual}`)
                 .then(response => response.json())
                 .then(data => {                    
+                    let iconeClima = document.getElementById("icone-clima") //Tamanho 256px
+                    let condicaoAtual = data.current.condition.text
                     
+                    if (data.current.is_day == 1){
+                        document.getElementsByTagName("body")[0].style.backgroundImage = "url('/Projeto 8 - Site de clima (API)/img/img-blur.png')";
+                    } else {
+                        document.getElementsByTagName("body")[0].style.backgroundImage = "url('/Projeto 8 - Site de clima (API)/img/img-blur-noite.png')";
+                    }
+
+                    let nomeImg = condicaoAtual.toLowerCase()
+                    nomeImg = nomeImg.replace(" ", "-")
+                    nomeImg += ".png"
+
+                    let enderecoImg = "/Projeto 8 - Site de clima (API)/img/icones-climas/" + nomeImg
+
+                    iconeClima.setAttribute("src", enderecoImg)
+                    iconeClima.setAttribute("alt", data.current.condition.text)
+
                 })
 
                 .catch(erro => {
                     console.error(erro)
                 })
-
-
         }
 
         carregarInformacoes(localAtual)
