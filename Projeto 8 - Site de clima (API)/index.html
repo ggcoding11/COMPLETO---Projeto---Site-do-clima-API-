@@ -52,11 +52,16 @@
             font-size: 30px;
         }
 
-        #temp-atual{
+        #temp-atual {
             font-family: "Roboto Condensed", sans-serif;
-            font-size: 60px; 
+            font-size: 60px;
             font-weight: bold;
         }
+
+        .info h1{
+            font-family: "Roboto Condensed", sans-serif;
+        }
+
     </style>
 </head>
 
@@ -70,7 +75,8 @@
                 Weather Kermit</a>
             <div class="d-flex align-items-center">
                 <form class="d-flex me-2" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Ex: Maringá" aria-label="Search" id="local-pesquisado">
+                    <input class="form-control me-2" type="search" placeholder="Ex: Maringá" aria-label="Search"
+                        id="local-pesquisado">
                     <button class="btn btn-outline-success" type="button" id="buscar-local">Buscar</button>
                 </form>
 
@@ -109,8 +115,23 @@
                         </div>
                     </div>
 
-                    <div class="row" id="linha-info">
-
+                    <div class="row d-flex justify-content-center align-items-center" id="linha-info">
+                        <div class="col-4">
+                            <div class="card info bg-secondary-subtle">
+                                <h2 class="text-center">Precipitação</h2>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card info bg-secondary-subtle">
+                                <h2 class="text-center">Mínima: </h2>
+                                <h2 class="text-center">Máxima: </h2>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card info bg-secondary-subtle">
+                                <h2 class="text-center">Umidade relativa</h2>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -127,7 +148,7 @@
 
         let botaoBuscar = document.getElementById("buscar-local")
 
-        botaoBuscar.addEventListener("click", function(){
+        botaoBuscar.addEventListener("click", function () {
             let localPesquisado = document.getElementById("local-pesquisado").value
 
             carregarInformacoes(localPesquisado)
@@ -162,11 +183,17 @@
 
                     let nomeLocal = document.getElementById("nome-local")
 
-                    nomeLocal.innerText = local.toUpperCase()
+                    nomeLocal.innerText = (data.location.name).toUpperCase()
 
                     let pais = data.location.country
 
                     let tempAtual = document.getElementById("temp-atual")
+
+                    fetch(`https://api.weatherapi.com/v1/forecast.json?key=${chaveAPI}&q=${local}&days=1`)
+                        .then(responseFcast => responseFcast.json())
+                        .then(dataFcast => {
+                            //É daqui que eu vou tirar a chance de chuva
+                        })
 
                     tempAtual.innerText = data.current.temp_c + "°C"
 
