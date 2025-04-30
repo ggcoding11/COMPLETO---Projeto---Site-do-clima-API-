@@ -13,6 +13,12 @@
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400&family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
 
     <style>
         * {
@@ -32,6 +38,30 @@
             font-family: "Sansation", sans-serif;
         }
 
+        #bandeira-local {
+            width: 30px;
+        }
+
+        #nome-local {
+            font-family: "Sansation", sans-serif;
+            font-size: 18px;
+        }
+
+        #condicao-clima {
+            font-family: "Roboto Condensed", sans-serif;
+            font-size: 30px;
+        }
+
+        #temp-atual {
+            font-family: "Roboto Condensed", sans-serif;
+            font-size: 60px;
+            font-weight: bold;
+        }
+
+        .info h1{
+            font-family: "Roboto Condensed", sans-serif;
+        }
+
     </style>
 </head>
 
@@ -45,8 +75,9 @@
                 Weather Kermit</a>
             <div class="d-flex align-items-center">
                 <form class="d-flex me-2" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Ex: Maringá" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Buscar</button>
+                    <input class="form-control me-2" type="search" placeholder="Ex: Maringá" aria-label="Search"
+                        id="local-pesquisado">
+                    <button class="btn btn-outline-success" type="button" id="buscar-local">Buscar</button>
                 </form>
 
                 <button type="button" class="btn">
@@ -56,25 +87,54 @@
         </div>
     </nav>
 
-    <div class="container mt-5" id="conteudo-site">
+    <div class="container mt-4" id="conteudo-site">
         <!-- Informações atuais sobre o clima -->
-    
-        <div class="row" id="linha-img">
-            <div class="col-12 d-flex justify-content-center">
-                <img src="" alt="" id="icone-clima">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-lg-8 col-md-10 col-12">
+                <div class="card bg-secondary rounded-4">
+                    <div class="row mt-4" id="linha-img">
+                        <div class="col-12 d-flex justify-content-center">
+                            <img src="" alt="" id="icone-clima">
+                        </div>
+                    </div>
+
+                    <div class="row" id="linha-condicao">
+                        <div class="col-12 text-center" id="condicao-clima"></div>
+                    </div>
+
+                    <div class="row d-flex align-items-center justify-content-center mt-2" id="linha-local">
+                        <div class="col-auto" id="nome-local"></div>
+                        <div class="col-auto">
+                            <img src="" alt="" id="bandeira-local">
+                        </div>
+                    </div>
+
+                    <div class="row" id="linha-temp">
+                        <div class="col-12 text-center" id="temp-atual">
+
+                        </div>
+                    </div>
+
+                    <div class="row d-flex justify-content-center align-items-center" id="linha-info">
+                        <div class="col-4">
+                            <div class="card info bg-secondary-subtle">
+                                <h2 class="text-center">Precipitação</h2>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card info bg-secondary-subtle">
+                                <h2 class="text-center">Mínima: </h2>
+                                <h2 class="text-center">Máxima: </h2>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card info bg-secondary-subtle">
+                                <h2 class="text-center">Umidade relativa</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="row" id="linha-local">
-
-        </div>
-
-        <div class="row" id="linha-temp">
-
-        </div>
-
-        <div class="row" id="linha-info">
-
         </div>
     </div>
 
@@ -86,29 +146,34 @@
         let localAtual = "Maringá"
         const chaveAPI = "290fc79807794f89812162023252404"
 
-        function buscarLocal() {
+        let botaoBuscar = document.getElementById("buscar-local")
 
-            //Se o local realmente existir
-            carregarInformacoes(local)
-        }
+        botaoBuscar.addEventListener("click", function () {
+            let localPesquisado = document.getElementById("local-pesquisado").value
+
+            carregarInformacoes(localPesquisado)
+        })
 
         function carregarInformacoes(local) {
             //Mostra as informações do clima do local respectivo
 
-            fetch(`https://api.weatherapi.com/v1/current.json?key=${chaveAPI}&q=${localAtual}`)
+            fetch(`https://api.weatherapi.com/v1/current.json?key=${chaveAPI}&q=${local}`)
                 .then(response => response.json())
-                .then(data => {                    
+                .then(data => {
                     let iconeClima = document.getElementById("icone-clima") //Tamanho 256px
                     let condicaoAtual = data.current.condition.text
-                    
-                    if (data.current.is_day == 1){
+
+                    let nomeCondicaoClima = document.getElementById("condicao-clima")
+                    nomeCondicaoClima.innerText = condicaoAtual
+
+                    if (data.current.is_day == 1) {
                         document.getElementsByTagName("body")[0].style.backgroundImage = "url('/Projeto 8 - Site de clima (API)/img/img-blur.png')";
                     } else {
                         document.getElementsByTagName("body")[0].style.backgroundImage = "url('/Projeto 8 - Site de clima (API)/img/img-blur-noite.png')";
                     }
 
                     let nomeImg = condicaoAtual.toLowerCase()
-                    nomeImg = nomeImg.replace(" ", "-")
+                    nomeImg = nomeImg.replace(/ /g, "-")
                     nomeImg += ".png"
 
                     let enderecoImg = "/Projeto 8 - Site de clima (API)/img/icones-climas/" + nomeImg
@@ -116,6 +181,30 @@
                     iconeClima.setAttribute("src", enderecoImg)
                     iconeClima.setAttribute("alt", data.current.condition.text)
 
+                    let nomeLocal = document.getElementById("nome-local")
+
+                    nomeLocal.innerText = (data.location.name).toUpperCase()
+
+                    let pais = data.location.country
+
+                    let tempAtual = document.getElementById("temp-atual")
+
+                    fetch(`https://api.weatherapi.com/v1/forecast.json?key=${chaveAPI}&q=${local}&days=1`)
+                        .then(responseFcast => responseFcast.json())
+                        .then(dataFcast => {
+                            //É daqui que eu vou tirar a chance de chuva
+                        })
+
+                    tempAtual.innerText = data.current.temp_c + "°C"
+
+                    fetch(`https://restcountries.com/v3.1/name/${pais.toLowerCase()}`)
+                        .then(responseFlag => responseFlag.json())
+                        .then(dataFlag => {
+                            let bandeiraLocal = document.getElementById("bandeira-local")
+
+                            bandeiraLocal.setAttribute("src", dataFlag[0].flags.png)
+                            bandeiraLocal.setAttribute("alt", pais)
+                        })
                 })
 
                 .catch(erro => {
