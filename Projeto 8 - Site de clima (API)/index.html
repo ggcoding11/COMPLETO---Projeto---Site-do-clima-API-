@@ -58,10 +58,9 @@
             font-weight: bold;
         }
 
-        .info h1{
+        .info h1 {
             font-family: "Roboto Condensed", sans-serif;
         }
-
     </style>
 </head>
 
@@ -160,7 +159,6 @@
             fetch(`https://api.weatherapi.com/v1/current.json?key=${chaveAPI}&q=${local}`)
                 .then(response => response.json())
                 .then(data => {
-                    let iconeClima = document.getElementById("icone-clima") //Tamanho 256px
                     let condicaoAtual = data.current.condition.text
 
                     let nomeCondicaoClima = document.getElementById("condicao-clima")
@@ -178,8 +176,9 @@
 
                     let enderecoImg = "/Projeto 8 - Site de clima (API)/img/icones-climas/" + nomeImg
 
+                    let iconeClima = document.getElementById("icone-clima") //Tamanho 256px
                     iconeClima.setAttribute("src", enderecoImg)
-                    iconeClima.setAttribute("alt", data.current.condition.text)
+                    iconeClima.setAttribute("alt", condicaoAtual)
 
                     let nomeLocal = document.getElementById("nome-local")
 
@@ -188,14 +187,13 @@
                     let pais = data.location.country
 
                     let tempAtual = document.getElementById("temp-atual")
+                    tempAtual.innerText = data.current.temp_c + "°C"
 
                     fetch(`https://api.weatherapi.com/v1/forecast.json?key=${chaveAPI}&q=${local}&days=1`)
                         .then(responseFcast => responseFcast.json())
                         .then(dataFcast => {
                             //É daqui que eu vou tirar a chance de chuva
                         })
-
-                    tempAtual.innerText = data.current.temp_c + "°C"
 
                     fetch(`https://restcountries.com/v3.1/name/${pais.toLowerCase()}`)
                         .then(responseFlag => responseFlag.json())
