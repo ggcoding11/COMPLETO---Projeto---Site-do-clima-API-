@@ -118,16 +118,8 @@
                         <div class="col-auto">
                             <div class="card info bg-secondary-subtle">
                                 <div class="card-body">
-                                    <h5 class="card-title fs-5">Chance de chuvas</h5>
-                                    <p class="card-text text-center fs-3">25%</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <div class="card info bg-secondary-subtle">
-                                <div class="card-body">
                                     <h5 class="card-title fs-5" style="color: rgb(60, 60, 235);">Mínima</h5>
-                                    <p class="card-text text-center fs-3">5°C</p>
+                                    <p class="card-text text-center fs-3" id="temp-minima">5°C</p>
                                 </div>
                             </div>
                         </div>
@@ -135,7 +127,7 @@
                             <div class="card info bg-secondary-subtle">
                                 <div class="card-body">
                                     <h5 class="card-title fs-5" style="color: rgb(165, 50, 50);">Máxima</h5>
-                                    <p class="card-text text-center fs-3">25°C</p>
+                                    <p class="card-text text-center fs-3" id="temp-maxima">25°C</p>
                                 </div>
                             </div>
                         </div>
@@ -144,7 +136,7 @@
                             <div class="card info bg-secondary-subtle">
                                 <div class="card-body">
                                     <h5 class="card-title fs-5" style="color: rgb(81, 105, 105);">Umidade relativa</h5>
-                                    <p class="card-text text-center fs-3">2%</p>
+                                    <p class="card-text text-center fs-3" id="umidade-relativa">2%</p>
                                 </div>
                             </div>
                         </div>
@@ -178,8 +170,7 @@
                 .then(data => {
                     let condicaoAtual = data.current.condition.text
 
-                    let nomeCondicaoClima = document.getElementById("condicao-clima")
-                    nomeCondicaoClima.innerText = condicaoAtual
+                    document.getElementById("condicao-clima").innerText = condicaoAtual
 
                     if (data.current.is_day == 1) {
                         document.getElementsByTagName("body")[0].style.backgroundImage = "url('/Projeto 8 - Site de clima (API)/img/img-blur.png')";
@@ -197,19 +188,20 @@
                     iconeClima.setAttribute("src", enderecoImg)
                     iconeClima.setAttribute("alt", condicaoAtual)
 
-                    let nomeLocal = document.getElementById("nome-local")
-
-                    nomeLocal.innerText = (data.location.name).toUpperCase()
+                    document.getElementById("nome-local").innerText = (data.location.name).toUpperCase()
 
                     let pais = data.location.country
-
-                    let tempAtual = document.getElementById("temp-atual")
-                    tempAtual.innerText = data.current.temp_c + "°C"
+ 
+                    document.getElementById("temp-atual").innerText = data.current.temp_c + "°C"
 
                     fetch(`https://api.weatherapi.com/v1/forecast.json?key=${chaveAPI}&q=${local}&days=1`)
                         .then(responseFcast => responseFcast.json())
                         .then(dataFcast => {
-                            //É daqui que eu vou tirar a chance de chuva
+                            console.log(dataFcast)
+
+                            document.getElementById("temp-minima").innerText = dataFcast.forecast.forecastday[0].day.mintemp_c + "°C"
+                            document.getElementById("temp-maxima").innerText = dataFcast.forecast.forecastday[0].day.maxtemp_c + "°C"
+                            document.getElementById("umidade-relativa").innerText = dataFcast.forecast.forecastday[0].day.avghumidity + "%"
                         })
 
                     fetch(`https://restcountries.com/v3.1/name/${pais.toLowerCase()}`)
