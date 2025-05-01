@@ -98,7 +98,9 @@
                     </div>
 
                     <div class="row" id="linha-condicao">
-                        <div class="col-12 text-center" id="condicao-clima"></div>
+                        <div class="col-12 text-center" id="condicao-clima">
+                            
+                        </div>
                     </div>
 
                     <div class="row d-flex align-items-center justify-content-center mt-2" id="linha-local">
@@ -184,7 +186,7 @@
 
                     let enderecoImg = "/Projeto 8 - Site de clima (API)/img/icones-climas/" + nomeImg
 
-                    let iconeClima = document.getElementById("icone-clima") //Tamanho 256px
+                    let iconeClima = document.getElementById("icone-clima")
                     iconeClima.setAttribute("src", enderecoImg)
                     iconeClima.setAttribute("alt", condicaoAtual)
 
@@ -206,7 +208,6 @@
                         .then(responseFlag => responseFlag.json())
                         .then(dataFlag => {
                             let bandeiraLocal = document.getElementById("bandeira-local")
-
                             bandeiraLocal.setAttribute("src", dataFlag[0].flags.png)
                             bandeiraLocal.setAttribute("alt", pais)
                         })
