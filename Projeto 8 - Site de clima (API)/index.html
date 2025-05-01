@@ -58,7 +58,7 @@
             font-weight: bold;
         }
 
-        #icone-clima{
+        #icone-clima {
             height: 180px;
         }
     </style>
@@ -191,14 +191,12 @@
                     document.getElementById("nome-local").innerText = (data.location.name).toUpperCase()
 
                     let pais = data.location.country
- 
+
                     document.getElementById("temp-atual").innerText = data.current.temp_c + "°C"
 
                     fetch(`https://api.weatherapi.com/v1/forecast.json?key=${chaveAPI}&q=${local}&days=1`)
                         .then(responseFcast => responseFcast.json())
                         .then(dataFcast => {
-                            console.log(dataFcast)
-
                             document.getElementById("temp-minima").innerText = dataFcast.forecast.forecastday[0].day.mintemp_c + "°C"
                             document.getElementById("temp-maxima").innerText = dataFcast.forecast.forecastday[0].day.maxtemp_c + "°C"
                             document.getElementById("umidade-relativa").innerText = dataFcast.forecast.forecastday[0].day.avghumidity + "%"
