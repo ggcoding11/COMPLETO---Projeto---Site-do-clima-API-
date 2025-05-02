@@ -1,6 +1,6 @@
-let modoEscuro = false
+let botaoModoEscuro = document.getElementById("botao-modo-escuro")
 
-document.getElementById("botao-modo-escuro").addEventListener("click", () => {
+botaoModoEscuro.addEventListener("click", () => {
     let iconeModoEscuro = document.getElementById("icone-modo-escuro")
     let navbar = document.querySelector(".navbar")
     let tituloNavbar = document.querySelector(".navbar-brand")
@@ -8,8 +8,8 @@ document.getElementById("botao-modo-escuro").addEventListener("click", () => {
     let body = document.getElementsByTagName("body")[0]
     let cardContainer = document.querySelector(".card-container")
 
-    if (modoEscuro == false) {
-        modoEscuro = true
+    if (botaoModoEscuro.getAttribute("aria-pressed") == "false") {
+        botaoModoEscuro.setAttribute("aria-pressed", "true")
         iconeModoEscuro.className = "bi bi-moon-fill"
         navbar.className += " dark-mode"
         tituloNavbar.className += " dark-mode"
@@ -20,7 +20,7 @@ document.getElementById("botao-modo-escuro").addEventListener("click", () => {
         body.style.backgroundImage = "url('/Projeto 8 - Site de clima (API)/img/img-blur-noite.png')";
         cardContainer.className = document.querySelector(".card-container").className.replace("white", "secondary")
     } else {
-        modoEscuro = false
+        botaoModoEscuro.setAttribute("aria-pressed", "false")
         iconeModoEscuro.className = "bi bi-moon"
         navbar.className = document.querySelector(".navbar").className.replace("dark-mode", "")
         tituloNavbar.className = document.querySelector(".navbar-brand").className.replace("dark-mode", "")
@@ -44,8 +44,6 @@ document.getElementById("buscar-local").addEventListener("click", function () {
 })
 
 function carregarInformacoes(local) {
-    //Mostra as informações do clima do local respectivo
-
     fetch(`https://api.weatherapi.com/v1/current.json?key=${chaveAPI}&q=${local}`)
         .then(response => response.json())
         .then(data => {
@@ -92,4 +90,3 @@ function carregarInformacoes(local) {
 }
 
 carregarInformacoes(localAtual)
-//É o local padrão que mostra quando eu abro o site!
