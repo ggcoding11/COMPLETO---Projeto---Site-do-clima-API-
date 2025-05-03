@@ -47,14 +47,14 @@ inputLocalPesquisado.addEventListener("input", ()=>{
     if ((inputLocalPesquisado.value).length > 3){
         fetch(`https://api.weatherapi.com/v1/search.json?key=${chaveAPI}&q=${inputLocalPesquisado.value}`)
             .then(responseLocais => responseLocais.json())
-            .then(dataLocais =>{
-                console.log(dataLocais)
-                
+            .then(dataLocais =>{               
                 listaSugestoes.innerText = ""
 
                 dataLocais.forEach(function(local){
                     let sugestao = document.createElement("li")
                     
+                    sugestao.className = "list-group-item"
+
                     sugestao.innerHTML = `${local.name} - ${local.region} (${local.country})`
 
                     listaSugestoes.appendChild(sugestao)
