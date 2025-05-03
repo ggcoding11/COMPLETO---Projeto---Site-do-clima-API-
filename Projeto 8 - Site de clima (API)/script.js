@@ -37,8 +37,41 @@ botaoModoEscuro.addEventListener("click", () => {
 let localAtual = "Maringá"
 const chaveAPI = "290fc79807794f89812162023252404"
 
+let inputLocalPesquisado = document.getElementById("local-pesquisado")
+let sugestoes = document.querySelector("#sugestoes")
+
+
+inputLocalPesquisado.addEventListener("input", ()=>{
+    //A cada vez que eu escrever algo, vai mostrar pra mim as sugestões (autocomplete)
+
+    if ((inputLocalPesquisado.value).length > 3){
+        fetch(`https://api.weatherapi.com/v1/search.json?key=${chaveAPI}&q=${inputLocalPesquisado.value}`)
+            .then(responseLocais => responseLocais.json())
+            .then(dataLocais =>{
+                console.log(dataLocais)
+                
+                sugestoes.innerText = ""
+                
+                dataLocais.forEach(function(local){
+                    let sugestao = document.createElement("li")
+                    
+                    sugestao.innerHTML = local.name
+
+                    sugestoes.appendChild(sugestao)
+                })
+
+                /* A procura ocorre a partir de um certo número de caracteres
+                
+                    A partir das palavras escritas, serão mostradas as sugestões em baixo
+
+                */
+        })
+    }
+})
+
+
 document.getElementById("buscar-local").addEventListener("click", function () {
-    let localPesquisado = document.getElementById("local-pesquisado").value
+    let localPesquisado = inputLocalPesquisado.value
 
     carregarInformacoes(localPesquisado)
 })
