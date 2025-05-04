@@ -17,7 +17,7 @@ botaoModoEscuro.addEventListener("click", () => {
             card.className += " dark-mode"
         })
 
-        body.style.backgroundImage = "url('/Projeto 8 - Site de clima (API)/img/img-blur-noite.png')";
+        body.style.backgroundImage = "url('/Projeto 8 - Site de clima (API)/img/img-blur-noite.png'), url('/Projeto 8 - Site de clima (API)/img/img-blur.png')";
         cardContainer.className = document.querySelector(".card-container").className.replace("white", "secondary")
     } else {
         botaoModoEscuro.setAttribute("aria-pressed", "false")
@@ -29,7 +29,7 @@ botaoModoEscuro.addEventListener("click", () => {
             card.className = card.className.replace(" dark-mode", "")
         })
 
-        body.style.backgroundImage = "url('/Projeto 8 - Site de clima (API)/img/img-blur.png')";
+        body.style.backgroundImage = "url('/Projeto 8 - Site de clima (API)/img/img-blur.png'), url('/Projeto 8 - Site de clima (API)/img/img-blur-noite.png')";
         cardContainer.className = document.querySelector(".card-container").className.replace("secondary", "white")
     }
 })

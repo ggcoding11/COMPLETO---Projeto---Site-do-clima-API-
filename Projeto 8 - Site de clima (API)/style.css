@@ -9,7 +9,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-image: url('/Projeto 8 - Site de clima (API)/img/img-blur.png');
+    background-image: url('/Projeto 8 - Site de clima (API)/img/img-blur.png'), url('/Projeto 8 - Site de clima (API)/img/img-blur-noite.png');
 }
 
 #nome-site {
