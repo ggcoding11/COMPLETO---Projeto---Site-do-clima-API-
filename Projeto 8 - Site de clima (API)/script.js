@@ -17,7 +17,7 @@ botaoModoEscuro.addEventListener("click", () => {
             card.className += " dark-mode"
         })
 
-        body.style.backgroundImage = "url('/Projeto 8 - Site de clima (API)/img/img-blur-noite.png'), url('/Projeto 8 - Site de clima (API)/img/img-blur.png')";
+        body.style.backgroundImage = "url('/img/img-blur-noite.png'), url('/Projeto 8 - Site de clima (API)/img/img-blur.png')";
         cardContainer.className = document.querySelector(".card-container").className.replace("white", "secondary")
     } else {
         botaoModoEscuro.setAttribute("aria-pressed", "false")
@@ -29,7 +29,7 @@ botaoModoEscuro.addEventListener("click", () => {
             card.className = card.className.replace(" dark-mode", "")
         })
 
-        body.style.backgroundImage = "url('/Projeto 8 - Site de clima (API)/img/img-blur.png'), url('/Projeto 8 - Site de clima (API)/img/img-blur-noite.png')";
+        body.style.backgroundImage = "url('/img/img-blur.png'), url('/img/img-blur-noite.png')";
         cardContainer.className = document.querySelector(".card-container").className.replace("secondary", "white")
     }
 })
@@ -92,7 +92,7 @@ function carregarInformacoes(local) {
             nomeImg = nomeImg.replace(/ /g, "-")
             nomeImg += ".png"
 
-            let enderecoImg = "/Projeto 8 - Site de clima (API)/img/icones-climas/" + nomeImg
+            let enderecoImg = "/img/icones-climas/" + nomeImg
 
             let iconeClima = document.getElementById("icone-clima")
             iconeClima.setAttribute("src", enderecoImg)
