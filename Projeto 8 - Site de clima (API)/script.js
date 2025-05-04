@@ -41,35 +41,29 @@ let inputLocalPesquisado = document.getElementById("local-pesquisado")
 
 let listaSugestoes = document.querySelector("#sugestoes")
 
-inputLocalPesquisado.addEventListener("input", ()=>{
+inputLocalPesquisado.addEventListener("input", () => {
     //A cada vez que eu escrever algo, vai mostrar pra mim as sugestões (autocomplete)
 
-    if ((inputLocalPesquisado.value).length > 2){
+    if ((inputLocalPesquisado.value).length > 2) {
         fetch(`https://api.weatherapi.com/v1/search.json?key=${chaveAPI}&q=${inputLocalPesquisado.value}`)
             .then(responseLocais => responseLocais.json())
-            .then(dataLocais =>{               
-                listaSugestoes.innerText = ""
+            .then(dataLocais => {
+                listaSugestoes.innerHTML = ""
 
-                dataLocais.forEach(function(local){
+                dataLocais.forEach(function (local) {
                     let sugestao = document.createElement("li")
-                    
+
                     sugestao.className = "list-group-item"
 
                     sugestao.innerHTML = `${local.name} - ${local.region} (${local.country})`
 
                     listaSugestoes.appendChild(sugestao)
                 })
+            })
+    }
 
-                /* A procura ocorre a partir de um certo número de caracteres
-                
-                    A partir das palavras escritas, serão mostradas as sugestões em baixo
-
-                */
-        })
-
-        if((inputLocalPesquisado.value).length = 0){
-            listaSugestoes.innerText = ""
-        }
+    if ((inputLocalPesquisado.value).length == 0) {
+        listaSugestoes.innerHTML = ""
     }
 })
 
