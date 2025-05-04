@@ -34,7 +34,6 @@ botaoModoEscuro.addEventListener("click", () => {
     }
 })
 
-let localAtual = "Maringá"
 const chaveAPI = "290fc79807794f89812162023252404"
 
 let inputLocalPesquisado = document.getElementById("local-pesquisado")
@@ -51,13 +50,19 @@ inputLocalPesquisado.addEventListener("input", () => {
                 listaSugestoes.innerHTML = ""
 
                 dataLocais.forEach(function (local) {
-                    let sugestao = document.createElement("li")
+                    let sugestao = document.createElement("button")
 
-                    sugestao.className = "list-group-item"
+                    sugestao.setAttribute("type", "button")
+
+                    sugestao.className = "list-group-item list-group-item-action"
 
                     sugestao.innerHTML = `${local.name} - ${local.region} (${local.country})`
 
                     listaSugestoes.appendChild(sugestao)
+                    
+                    sugestao.addEventListener("mousedown", ()=>{
+                        carregarInformacoes(`${local.lat},${local.lon}`)
+                    })
                 })
             })
     }
@@ -67,6 +72,9 @@ inputLocalPesquisado.addEventListener("input", () => {
     }
 })
 
+inputLocalPesquisado.addEventListener("blur", () => {
+    listaSugestoes.innerHTML = ""
+})
 
 document.getElementById("buscar-local").addEventListener("click", function () {
     carregarInformacoes(inputLocalPesquisado.value)
@@ -116,6 +124,8 @@ function carregarInformacoes(local) {
         .catch(erro => {
             console.error(erro)
         })
+
+    inputLocalPesquisado.value = ""
 }
 
-carregarInformacoes(localAtual)
+carregarInformacoes("Maringá")
