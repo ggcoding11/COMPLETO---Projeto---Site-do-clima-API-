@@ -34,7 +34,7 @@ botaoModoEscuro.addEventListener("click", () => {
     }
 })
 
-const chaveAPI = "290fc79807794f89812162023252404"
+const chaveAPI = "" //Pode colocar uma chave do WeatherAPI para testar (GRÁTIS!!)
 
 let inputLocalPesquisado = document.getElementById("local-pesquisado")
 
