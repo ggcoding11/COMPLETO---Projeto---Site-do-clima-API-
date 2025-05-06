@@ -41,8 +41,7 @@ let inputLocalPesquisado = document.getElementById("local-pesquisado")
 let listaSugestoes = document.querySelector("#sugestoes")
 
 inputLocalPesquisado.addEventListener("input", () => {
-    //A cada vez que eu escrever algo, vai mostrar pra mim as sugestões (autocomplete)
-
+    
     if ((inputLocalPesquisado.value).length > 2) {
         fetch(`https://api.weatherapi.com/v1/search.json?key=${chaveAPI}&q=${inputLocalPesquisado.value}`)
             .then(responseLocais => responseLocais.json())
